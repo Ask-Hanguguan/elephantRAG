@@ -2,7 +2,7 @@ collection_name: agent
 persist_directory: chroma_db
 k: 3
 data_path: data
-md5_hex_store: md5.text
+md5_hex_store: MD5.db
 allow_knowledge_file_type: ["txt", "pdf", "csv"]
 
 chunk_size: 200

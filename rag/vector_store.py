@@ -8,7 +8,7 @@ from model.factory import embed_model
 from utils.config_handler import chroma_conf
 from utils.file_handler import txt_loader, listdir_with_allowed_type, get_file_md5_hex, pdf_loader
 from utils.path_tool import get_abs_path
-
+from rag.md5_store import MD5Store
 
 class VectorStoreService(object):
     def __init__(self):
@@ -25,27 +25,12 @@ class VectorStoreService(object):
             length_function=len,
         )
 
+        self.md5_store = MD5Store()
+
     def get_retriever(self):
         return self.vector_store.as_retriever(search_kwargs={"k":chroma_conf['k']})
 
     def load_document(self):
-
-        def check_md5_hex(md5_for_check):
-            if not os.path.exists(get_abs_path(chroma_conf['md5_hex_store'])):
-                open(get_abs_path(chroma_conf['md5_hex_store']), 'w',encoding='utf-8').close()
-                return False
-
-            with open(get_abs_path(chroma_conf['md5_hex_store']), 'r', encoding='utf-8') as f:
-                for line in f.readlines():
-                    line = line.strip()
-                    if line == md5_for_check:
-                        return True
-
-            return False
-
-        def save_md5_hex(md5_for_save):
-            with open(get_abs_path(chroma_conf['md5_hex_store']), 'a', encoding='utf-8') as f:
-                f.write(md5_for_save+'\n')
 
         def get_file_document(read_path:  str):
             if read_path.endswith('.txt'):
@@ -68,7 +53,7 @@ class VectorStoreService(object):
                 logger.warning(f"[加载知识库] {path} MD5计算失败，跳过")
                 continue
 
-            if check_md5_hex(md5_hex):
+            if self.md5_store.is_existing_md5(md5_hex):
                 logger.info(f"[加载知识库] {path} 内容已经存在于知识库，跳过")
                 continue
 
@@ -87,7 +72,7 @@ class VectorStoreService(object):
 
                 self.vector_store.add_documents(split_documents)
 
-                save_md5_hex(md5_hex)
+                self.md5_store.add_md5(md5_hex)
 
                 logger.info(f"[加载知识库] {path} 内容加载成功")
             except Exception as e:
