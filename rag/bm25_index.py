@@ -166,8 +166,8 @@ if __name__ == '__main__':
     print(f"索引中文档数：{len(bm25_index._chunk_ids)}")
 
     # 测试搜索
-    results = bm25_index.search("扫地机器人", k=5)
-    print(f"\n搜索 '扫地机器人' Top 5:")
+    results = bm25_index.search("决策树", k=5)
+    print(f"\n搜索 '决策树' Top 5:")
     for i, (chunk_id, score) in enumerate(results):
         # 找到对应的文档内容预览
         try:

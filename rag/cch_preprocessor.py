@@ -214,31 +214,31 @@ class CCHPreprocessor(object):
 
 if __name__ == '__main__':
     # 简单自测：用一段模拟markdown验证解析逻辑
-    sample_text = """# 扫地机器人使用指南
+    sample_text = """# 机器学习课程复习指南
 
-这是文档的引言部分，介绍扫地机器人的基本功能。
+这是文档的引言部分，介绍机器学习的基本概念。
 
-## 第一章 开箱安装
-开箱后请检查配件是否齐全。
+## 第一章 监督学习概述
+监督学习是机器学习的重要分支。
 
-### 1.1 配件清单
-主机、充电座、电源线、边刷×2。
+### 1.1 线性回归
+线性回归用于预测连续值。
 
-### 1.2 安装步骤
-将充电座靠墙放置，接通电源。
+### 1.2 逻辑回归
+逻辑回归用于二分类问题。
 
-## 第二章 日常使用
-日常使用需要注意以下事项。
+## 第二章 无监督学习
+无监督学习不需要标注数据。
 
-### 2.1 清洁模式
-标准模式适合日常清洁，强力模式适合深度清洁。
+### 2.1 K-Means聚类
+K-Means是一种常用的聚类算法。
 
-### 2.2 维护保养
-定期清理滚刷和边刷，更换滤网。
+### 2.2 主成分分析
+PCA用于降维处理。
 """
 
     preprocessor = CCHPreprocessor()
-    title = preprocessor.extract_title("扫地机器人100问.pdf", sample_text)
+    title = preprocessor.extract_title("机器学习复习指南.pdf", sample_text)
     section_map = preprocessor.parse_section_tree(sample_text)
 
     print(f"标题: {title}")
@@ -247,11 +247,11 @@ if __name__ == '__main__':
         print(f"  offset={offset:4d}  ->  {path}")
 
     # 模拟一个chunk定位
-    chunk = "主机、充电座、电源线、边刷×2。"
+    chunk = "K-Means是一种常用的聚类算法。"
     section = preprocessor.determine_section(chunk, sample_text, section_map)
     print(f"\nChunk: \"{chunk}\"")
     print(f"所属章节: {section}")
 
     # 查看CCH头部格式
     print(f"\nCCH头部示例:")
-    print(preprocessor.build_cch_header(title, "本文介绍扫地机器人的使用和维护方法", section))
+    print(preprocessor.build_cch_header(title, "本文介绍机器学习的基本概念和监督学习方法", section))

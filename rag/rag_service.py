@@ -114,4 +114,4 @@ if __name__ == '__main__':
     vs = VectorStoreService()
     rag = RagSummarizeService(vs)
 
-    print(rag.rag_summarize("小户型适合哪种扫地机器人？"))
+    print(rag.rag_summarize("什么是K-Means聚类算法？"))

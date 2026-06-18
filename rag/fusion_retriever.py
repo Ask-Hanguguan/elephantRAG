@@ -205,7 +205,7 @@ if __name__ == '__main__':
         bm25_top_k=fusion_conf.get('bm25_top_k', 10),
     )
 
-    query = "小户型适合哪种扫地机器人"
+    query = "什么是K-Means聚类算法"
     print(f"查询: {query}\n")
 
     # BM25 only
