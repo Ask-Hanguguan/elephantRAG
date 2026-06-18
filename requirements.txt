@@ -1,0 +1,29 @@
+# ============================================================
+# 期末复习助手 — 依赖
+# ============================================================
+
+# ---- Web 界面 ----
+streamlit>=1.28.0
+
+# ---- LLM & Agent 框架 ----
+langchain>=0.3.0
+langchain-core>=0.3.0
+langchain-community>=0.3.0
+langchain-chroma>=0.2.0
+langchain-text-splitters>=0.3.0
+langchain-docling>=0.1.0
+langgraph>=0.2.0
+
+# ---- 通义千问/通义 Embedding ----
+dashscope>=1.20.0
+
+# ---- 文档加载 ----
+docling>=2.0.0
+pypdfium2>=4.30.0
+
+# ---- BM25 检索 ----
+rank-bm25>=0.2.0
+jieba>=0.42.0
+
+# ---- 工具 ----
+pyyaml>=6.0
