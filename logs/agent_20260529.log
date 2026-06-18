@@ -1,6 +1,0 @@
-2026-05-29 14:52:25,389-agent-INFO- middleware.py:38-[log_before_model]: 即将调用模型，带有1条消息，消息如下：
-2026-05-29 14:52:25,390-agent-INFO- middleware.py:39-[log_before_model]: ----------省略已输出内容----------
-2026-05-29 14:52:25,390-agent-INFO- middleware.py:40-[log_before_model][HumanMessage]: http
-2026-05-29 15:00:48,351-agent-INFO- middleware.py:38-[log_before_model]: 即将调用模型，带有1条消息，消息如下：
-2026-05-29 15:00:48,352-agent-INFO- middleware.py:39-[log_before_model]: ----------省略已输出内容----------
-2026-05-29 15:00:48,352-agent-INFO- middleware.py:40-[log_before_model][HumanMessage]: http
