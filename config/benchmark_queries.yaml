@@ -1,5 +1,5 @@
 # RAG 基准测试查询集
-# 基于三大课程的知识库：计算机视觉与图像处理、数值计算、数据挖掘
+# 知识库：计算机视觉与图像处理、数据挖掘
 # expected_sources 为可选字段（填了可计算召回率），用文件名关键词匹配
 
 queries:
@@ -21,11 +21,6 @@ queries:
       - 频域滤波
     category: "image_processing"
 
-  - query: "图像分割的常用方法有哪些？"
-    expected_sources:
-      - 图像分割
-    category: "image_processing"
-
   - query: "显著性检测在计算机视觉中的应用场景是什么？"
     expected_sources:
       - 显著性检测
@@ -41,11 +36,6 @@ queries:
       - 图像去雾
     category: "image_processing"
 
-  - query: "三维建模中的点云数据如何处理？"
-    expected_sources:
-      - 三维建模
-    category: "image_processing"
-
   - query: "空间滤波中如何使用卷积核进行图像处理？"
     expected_sources:
       - 空间滤波
@@ -55,34 +45,6 @@ queries:
     expected_sources:
       - 频域滤波
     category: "image_processing"
-
-  # ============================================================
-  # 数值计算
-  # ============================================================
-  - query: "牛顿迭代法求解非线性方程的原理是什么？"
-    expected_sources:
-      - 实用数值计算方法
-    category: "numerical"
-
-  - query: "高斯消元法求解线性方程组的步骤？"
-    expected_sources:
-      - 实用数值计算方法
-    category: "numerical"
-
-  - query: "插值法中拉格朗日插值和牛顿插值的区别？"
-    expected_sources:
-      - 实用数值计算方法
-    category: "numerical"
-
-  - query: "数值积分中的梯形法则和辛普森法则怎么用？"
-    expected_sources:
-      - 实用数值计算方法
-    category: "numerical"
-
-  - query: "欧拉法和龙格-库塔法求解常微分方程的区别？"
-    expected_sources:
-      - 实用数值计算方法
-    category: "numerical"
 
   # ============================================================
   # 数据挖掘

@@ -305,16 +305,21 @@ class RAGBenchmark:
         self._ensure_services()
         t0 = time.perf_counter()
 
-        # 执行检索
+        # 执行检索（段落合并受 config/segment.enabled 控制）
+        segment_enabled = chroma_conf.get('segment', {}).get('enabled', True)
+
         if strategy == "dense_only":
             docs, chunk_ids = self._dense_search(query)
-            docs = self._segmenter.extract_segments(docs)
+            if segment_enabled:
+                docs = self._segmenter.extract_segments(docs)
         elif strategy == "bm25_only":
             docs, chunk_ids = self._bm25_search(query)
-            docs = self._segmenter.extract_segments(docs)
+            if segment_enabled:
+                docs = self._segmenter.extract_segments(docs)
         elif strategy == "rrf_fusion":
             docs, chunk_ids = self._fusion_search(query)
-            docs = self._segmenter.extract_segments(docs)
+            if segment_enabled:
+                docs = self._segmenter.extract_segments(docs)
         elif strategy == "fusion_no_segment":
             docs, chunk_ids = self._fusion_search(query)
         else:
@@ -622,9 +627,9 @@ class ReportPrinter:
         cls.print_header("聚合统计")
 
         headers = ["策略", "平均耗时", "最快", "最慢", "平均文档", "平均来源", "平均字符", "合并", "精确率", "召回率"]
-        widths = [18, 10, 8, 8, 10, 10, 10, 6, 8, 8]
+        widths = [18, 10, 10, 10, 10, 10, 10, 6, 8, 8]
 
-        print(f"    {cls.TL}{cls.H_LINE * (sum(widths) + len(widths) * 3 - 1)}{cls.TR}")
+        print(f"    {cls.TL}{cls.H_LINE * (sum(widths) + len(widths) * 3 + 1)}{cls.TR}")
         print(f"    {cls._row(headers, widths)}")
         print(f"    {cls._divider(widths)}")
 
@@ -643,7 +648,7 @@ class ReportPrinter:
             ]
             print(f"    {cls._row(cells, widths)}")
 
-        print(f"    {cls.BL}{cls.H_LINE * (sum(widths) + len(widths) * 3 - 1)}{cls.BR}")
+        print(f"    {cls.BL}{cls.H_LINE * (sum(widths) + len(widths) * 3 + 1)}{cls.BR}")
         print()
 
     @classmethod
@@ -681,7 +686,7 @@ class ReportPrinter:
         headers = [""] + [STRATEGY_DEFS[s]["name"] for s in strategies]
         widths = [18] + [12] * n
 
-        print(f"    {cls.TL}{cls.H_LINE * (sum(widths) + len(widths) * 3 - 1)}{cls.TR}")
+        print(f"    {cls.TL}{cls.H_LINE * (sum(widths) + len(widths) * 3 + 1)}{cls.TR}")
         print(f"    {cls._row(headers, widths)}")
         print(f"    {cls._divider(widths)}")
 
@@ -691,7 +696,7 @@ class ReportPrinter:
                 cells.append(f"{matrix[i][j]:.3f}")
             print(f"    {cls._row(cells, widths)}")
 
-        print(f"    {cls.BL}{cls.H_LINE * (sum(widths) + len(widths) * 3 - 1)}{cls.BR}")
+        print(f"    {cls.BL}{cls.H_LINE * (sum(widths) + len(widths) * 3 + 1)}{cls.BR}")
         print()
 
         # 解读
@@ -992,7 +997,7 @@ def main():
     # 打印报告
     ReportPrinter.print_report(
         report=report,
-        queries=queries,
+        query_entries=queries,
         top_k=args.show_top_k,
         max_preview=args.preview_len,
         full_report=not args.no_report,

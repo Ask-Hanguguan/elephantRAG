@@ -125,6 +125,7 @@ class SegmentExtractor(object):
 
         拼接 page_content（用换行分隔），保留第一个doc的元数据，
         添加 merged_from 和 chunk_range 标记。
+        合并时自动去重 CCH header（只保留第一个 chunk 的 header）。
 
         :param doc_list: 要合并的Document列表
         :return: 合并后的单个Document
@@ -132,8 +133,22 @@ class SegmentExtractor(object):
         if len(doc_list) == 1:
             return doc_list[0]
 
+        # CCH header 结束标记
+        cch_delimiter = "---\n"
+
+        # 保留第一个 chunk 的原始内容（含 CCH header）
+        parts = [doc_list[0].page_content]
+
+        # 后续 chunk 去掉 CCH header，只保留正文
+        for d in doc_list[1:]:
+            content = d.page_content
+            idx = content.find(cch_delimiter)
+            if idx != -1:
+                content = content[idx + len(cch_delimiter):]
+            parts.append(content)
+
         # 拼接内容
-        merged_content = "\n".join(d.page_content for d in doc_list)
+        merged_content = "\n".join(parts)
 
         # 复制第一个doc的元数据并添加合并标记
         merged_metadata = dict(doc_list[0].metadata)
