@@ -31,3 +31,4 @@ fusion:
 # 段落提取配置（依赖 CCH 开启才能写入 chunk_index 元数据，否则合并无效）
 segment:
   enabled: true
+

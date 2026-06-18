@@ -8,7 +8,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from model.factory import embed_model
 from utils.config_handler import chroma_conf
-from utils.file_handler import listdir_with_allowed_type, get_file_md5_hex, docling_loader
+from utils.file_handler import get_file_md5_hex, docling_loader
 from utils.path_tool import get_abs_path
 from rag.md5_store import MD5Store
 from rag.cch_preprocessor import CCHPreprocessor
@@ -217,7 +217,7 @@ if __name__ == '__main__':
 
     restriever = store.get_retriever()
 
-    res = restriever.invoke("韩语单词学习卡片")
+    res = restriever.invoke("空间滤波")
     for r in res:
         print(r.page_content)
         print("-" * 20)
