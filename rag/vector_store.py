@@ -217,10 +217,10 @@ if __name__ == '__main__':
 
     restriever = store.get_retriever()
 
-    res = restriever.invoke("空间滤波")
-    for r in res:
-        print(r.page_content)
-        print("-" * 20)
+    # res = restriever.invoke("空间滤波")
+    # for r in res:
+    #     print(r.page_content)
+    #     print("-" * 20)
 
 
 
