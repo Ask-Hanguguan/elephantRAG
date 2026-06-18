@@ -38,25 +38,81 @@ class VectorStoreService(object):
 
     def load_document(self):
 
-        def get_file_document(read_path:  str):
+        def get_file_document(read_path: str):
             return docling_loader(read_path)
 
-        # 获取一个可操作文件路径列表
-        allowed_file_path = listdir_with_allowed_type(
-            get_abs_path(chroma_conf['data_path']),
-            tuple(chroma_conf['allow_knowledge_file_type']),
-        )
+        # ================================================================
+        # Phase 1: 构建当前文件清单 {绝对路径: MD5}
+        # ================================================================
+        data_path = get_abs_path(chroma_conf['data_path'])
+        allowed_exts = tuple(chroma_conf['allow_knowledge_file_type'])
 
-        for path in allowed_file_path:
-            md5_hex = get_file_md5_hex(path)
+        if not os.path.isdir(data_path):
+            logger.error(f"[加载知识库] 数据目录不存在：{data_path}")
+            return
 
-            if not md5_hex: # 处理MD5计算失败的情况
-                logger.warning(f"[加载知识库] {path} MD5计算失败，跳过")
+        current_files = {}
+        for fname in os.listdir(data_path):
+            if not fname.endswith(allowed_exts):
                 continue
+            fpath = os.path.join(data_path, fname)
+            md5 = get_file_md5_hex(fpath)
+            if md5:
+                current_files[fpath] = md5
 
-            if self.md5_store.is_existing_md5(md5_hex):
-                logger.info(f"[加载知识库] {path} 内容已经存在于知识库，跳过")
-                continue
+        if not current_files:
+            logger.info("[加载知识库] data/ 目录无有效文件")
+            return
+
+        # ================================================================
+        # Phase 2: 首次迁移 → 尝试用旧MD5匹配当前文件，避免全量重入库
+        # ================================================================
+        if self.md5_store.old_md5s:
+            old_set = set(self.md5_store.old_md5s)
+            matched = 0
+            for path, md5 in current_files.items():
+                if md5 in old_set:
+                    self.md5_store.add_md5(md5, path)
+                    matched += 1
+            if matched:
+                logger.info(
+                    f"[加载知识库] 匹配旧MD5记录 {matched}/{len(current_files)} 个文件，避免重入库"
+                )
+
+        # ================================================================
+        # Phase 3: 与 MD5Store 比对，分类变更
+        # ================================================================
+        stored = self.md5_store.get_all_records()  # {path: md5}
+
+        deleted = {p for p in stored if p not in current_files}
+        changed = {p for p in current_files if p in stored and stored[p] != current_files[p]}
+        added = {p for p in current_files if p not in stored}
+        # unchanged = 自然跳过，无需处理
+
+        any_change = bool(deleted or changed or added)
+
+        # ================================================================
+        # Phase 4: 清理已删除/已变更的文件（先删后加）
+        # ================================================================
+        to_remove = deleted | changed
+        for path in to_remove:
+            try:
+                # 从 ChromaDB 删除（按 source 路径匹配 metadata）
+                self.vector_store._collection.delete(where={"source": {"$eq": path}})
+                # 从 MD5Store 删除
+                self.md5_store.delete_by_path(path)
+                logger.info(f"[加载知识库] 已移除：{os.path.basename(path)}")
+            except Exception as e:
+                logger.warning(f"[加载知识库] 移除失败：{path} - {str(e)}")
+
+        # ================================================================
+        # Phase 5: 添加新文件/变更的文件
+        # ================================================================
+        cch_enabled = chroma_conf.get('cch', {}).get('enabled', True)
+
+        to_add = added | changed
+        for path in to_add:
+            md5_hex = current_files[path]
 
             try:
                 documents: list[Document] = get_file_document(path)
@@ -65,11 +121,7 @@ class VectorStoreService(object):
                     logger.warning(f"[加载知识库] {path} 无有效文本内容，跳过")
                     continue
 
-                # ============================================================
-                # CCH预处理（分块前提取标题/摘要/章节，分块后为每个chunk添加头部）
-                # ============================================================
-                cch_enabled = chroma_conf.get('cch', {}).get('enabled', True)
-
+                # CCH预处理（分块前提取标题/摘要/章节）
                 if cch_enabled:
                     full_text = "\n".join([d.page_content for d in documents])
                     cch_meta = self.cch_preprocessor.preprocess(path, full_text)
@@ -84,11 +136,13 @@ class VectorStoreService(object):
                     logger.warning(f"[加载知识库] {path} 分片后无内容，跳过")
                     continue
 
-                # ============================================================
-                # CCH头部注入：为每个chunk添加文档上下文 + chunk_index元数据
-                # ============================================================
-                if cch_enabled:
-                    for i, chunk in enumerate(split_documents):
+                # 为每个 chunk 注入元数据 + CCH头部
+                for i, chunk in enumerate(split_documents):
+                    # 级联同步必需的元数据（无论CCH是否开启）
+                    chunk.metadata['source'] = path
+                    chunk.metadata['file_md5'] = md5_hex
+
+                    if cch_enabled:
                         section_path = self.cch_preprocessor.determine_section(
                             chunk.page_content, full_text, section_map
                         )
@@ -102,28 +156,30 @@ class VectorStoreService(object):
                         chunk.metadata['title'] = title
                         chunk.metadata['summary'] = summary
                         chunk.metadata['section_path'] = section_path
-                else:
+
+                if not cch_enabled:
                     logger.info(
-                        "[加载知识库] CCH未启用(cchenabled=false)，文档未写入chunk_index，"
+                        "[加载知识库] CCH未启用(cch.enabled=false)，文档未写入chunk_index，"
                         "段落合并(segment)功能将不可用"
                     )
 
                 self.vector_store.add_documents(split_documents)
 
-                self.md5_store.add_md5(md5_hex)
+                self.md5_store.add_md5(md5_hex, path)
 
-                logger.info(f"[加载知识库] {path} 内容加载成功（共{len(split_documents)}个chunk）")
+                logger.info(f"[加载知识库] {path} 加载成功（共{len(split_documents)}个chunk）")
             except Exception as e:
-                # exc_info为True会记录详细报错堆栈，False仅记录报错str
                 logger.error(f"[加载知识库] {path} 加载失败：{str(e)}", exc_info=True)
                 continue
 
-        # ============================================================
-        # 文档加载完成后重建BM25索引（如有新文档入库）
-        # ============================================================
-        if self._bm25_index is not None:
+        # ================================================================
+        # Phase 6: 重建BM25索引（有变更时才重建）
+        # ================================================================
+        if any_change and self._bm25_index is not None:
             self._bm25_index.rebuild()
             logger.info("[加载知识库] BM25索引已重建")
+        elif not any_change:
+            logger.info("[加载知识库] 无文件变更，跳过BM25重建")
 
     def get_retriever(self):
         """获取原始稠密检索器（向后兼容）"""
