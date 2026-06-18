@@ -97,6 +97,23 @@ streamlit run app.py
 
 ---
 
+## 🔑 环境变量
+
+| 变量 | 说明 | 必填 |
+|------|------|:----:|
+| `DASHSCOPE_API_KEY` | 通义千问 API Key（模型和 Embedding 均通过此接口） | ✅ |
+
+```bash
+# Windows (CMD)
+set DASHSCOPE_API_KEY=your-api-key-here
+
+# Windows (PowerShell)
+$env:DASHSCOPE_API_KEY="your-api-key-here"
+
+# macOS / Linux
+export DASHSCOPE_API_KEY="your-api-key-here"
+```
+
 ## 📊 配置
 
 - `config/chroma.yaml` — 向量库、分段、CCH、BM25 参数
