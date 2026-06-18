@@ -88,10 +88,13 @@ def listdir_with_allowed_type(path: str, allowed_types: tuple[str]):
 # 文档加载：PDF 用 pypdfium2 逐页提取，其他用 docling
 # ============================================================================
 
-def _load_pdf_with_pypdfium(filepath: str) -> list[Document]:
+def _load_pdf_with_pypdfium(filepath: str) -> tuple[list[Document], int]:
     """使用 pypdfium2 逐页提取 PDF 文字（轻量，无 OCR，内存友好）
 
     仅提取 PDF 中已嵌入的文本层。纯扫描版/图片型 PDF 将返回空内容。
+
+    Returns:
+        (docs, total_pages) — docs: 有嵌入文字的页面; total_pages: PDF 总页数
     """
     import pypdfium2 as pdfium
 
@@ -123,7 +126,7 @@ def _load_pdf_with_pypdfium(filepath: str) -> list[Document]:
             f"{len(docs)} 页有文字, {empty_pages} 页空白/纯图片"
         )
 
-    return docs
+    return docs, total_pages
 
 
 def _docling_load_one(filepath: str) -> list[Document]:
@@ -230,18 +233,28 @@ def docling_loader(filepath: str) -> list[Document]:
 
     if ext == '.pdf':
         # 第一轮：pypdfium2 快速提取嵌入文字
-        docs = _load_pdf_with_pypdfium(filepath)
-        if docs:
+        docs, total = _load_pdf_with_pypdfium(filepath)
+
+        if docs and len(docs) == total:
+            # 全部页面都有嵌入文字，直接用 pypdfium2 结果
             logger.info(
                 f"[加载] {os.path.basename(filepath)} → {len(docs)} 页 (pypdfium2)"
             )
             return docs
 
-        # 第二轮回退：扫描版/纯图片 PDF，docling 分批 OCR
-        logger.info(
-            f"[加载] {os.path.basename(filepath)} → "
-            f"无嵌入文字，回退到 DoclingLoader 分批 OCR"
-        )
+        if not docs:
+            # 无嵌入文字 → 扫描版/纯图片 PDF，docling 分批 OCR
+            logger.info(
+                f"[加载] {os.path.basename(filepath)} → "
+                f"无嵌入文字，回退到 DoclingLoader 分批 OCR"
+            )
+        else:
+            # 部分页面有嵌入文字，部分没有 → 也回退到 docling 分批整体 OCR
+            logger.info(
+                f"[加载] {os.path.basename(filepath)} → "
+                f"部分嵌入文字({len(docs)}/{total})，回退到 Docling 分批整体 OCR"
+            )
+
         return _load_pdf_with_docling_batched(filepath)
 
     # 非 PDF：docling
