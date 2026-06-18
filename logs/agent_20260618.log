@@ -703,3 +703,785 @@
 2026-06-18 21:49:59,948-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=
 2026-06-18 21:50:54,530-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\《实用数值计算方法》1-7章.pdf
 2026-06-18 21:50:54,530-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\《实用数值计算方法》1-7章.pdf 加载成功（共633个chunk）
+2026-06-18 22:09:09,174-agent-WARNING- vector_store.py:106-[加载知识库] 移除失败：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\《实用数值计算方法》1-7章.pdf - Failed to resolve records for deletion: Error sending backfill request to compactor: Error constructing hnsw segment reader: Error creating hnsw segment reader: Error loading hnsw index
+2026-06-18 22:21:54,635-agent-INFO- file_handler.py:240-[加载] 3 空间滤波.pdf → 43 页 (pypdfium2)
+2026-06-18 22:21:54,635-agent-DEBUG- cch_preprocessor.py:59-[CCH] 从文件名推导标题：3 空间滤波
+2026-06-18 22:21:57,679-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=150
+2026-06-18 22:21:57,679-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=3 空间滤波
+2026-06-18 22:21:59,789-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\3 空间滤波.pdf
+2026-06-18 22:21:59,789-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\3 空间滤波.pdf 加载成功（共43个chunk）
+2026-06-18 22:21:59,812-agent-DEBUG- file_handler.py:124-[PDF] 4   频域滤波.pdf: 45 页, 44 页有文字, 1 页空白/纯图片
+2026-06-18 22:21:59,812-agent-INFO- file_handler.py:253-[加载] 4   频域滤波.pdf → 部分嵌入文字(44/45)，回退到 Docling 分批整体 OCR
+2026-06-18 22:21:59,812-agent-INFO- file_handler.py:192-[Docling] 4   频域滤波.pdf 共 45 页, 按 10 页/批分批 OCR
+2026-06-18 22:22:03,523-agent-INFO- file_handler.py:21-[Docling] 共享 DocumentConverter 已创建
+2026-06-18 22:26:41,054-agent-DEBUG- file_handler.py:124-[PDF] 4   频域滤波.pdf: 45 页, 44 页有文字, 1 页空白/纯图片
+2026-06-18 22:26:41,054-agent-INFO- file_handler.py:253-[加载] 4   频域滤波.pdf → 部分嵌入文字(44/45)，回退到 Docling 分批整体 OCR
+2026-06-18 22:26:41,055-agent-INFO- file_handler.py:192-[Docling] 4   频域滤波.pdf 共 45 页, 按 10 页/批分批 OCR
+2026-06-18 22:26:44,545-agent-INFO- file_handler.py:21-[Docling] 共享 DocumentConverter 已创建
+2026-06-18 22:28:26,475-agent-INFO- file_handler.py:216-[Docling] 4   频域滤波.pdf 分批完成 → 5 个文档
+2026-06-18 22:28:26,476-agent-DEBUG- cch_preprocessor.py:59-[CCH] 从文件名推导标题：4   频域滤波
+2026-06-18 22:28:30,465-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=130
+2026-06-18 22:28:30,465-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=4   频域滤波
+2026-06-18 22:28:31,235-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\4   频域滤波.pdf
+2026-06-18 22:28:31,235-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\4   频域滤波.pdf 加载成功（共11个chunk）
+2026-06-18 22:28:31,255-agent-INFO- file_handler.py:240-[加载] 3 空间滤波.pdf → 43 页 (pypdfium2)
+2026-06-18 22:28:31,255-agent-DEBUG- cch_preprocessor.py:59-[CCH] 从文件名推导标题：3 空间滤波
+2026-06-18 22:28:35,169-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=167
+2026-06-18 22:28:35,170-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=3 空间滤波
+2026-06-18 22:28:36,864-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\3 空间滤波.pdf
+2026-06-18 22:28:36,865-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\3 空间滤波.pdf 加载成功（共43个chunk）
+2026-06-18 22:28:37,784-agent-INFO- file_handler.py:263-[加载] 3 空间滤波.pptx → 1 个文档
+2026-06-18 22:28:37,784-agent-DEBUG- cch_preprocessor.py:51-[CCH] 从H1提取标题：空间滤波
+2026-06-18 22:28:41,861-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=150
+2026-06-18 22:28:41,861-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=空间滤波
+2026-06-18 22:28:42,602-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\3 空间滤波.pptx
+2026-06-18 22:28:42,603-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\3 空间滤波.pptx 加载成功（共8个chunk）
+2026-06-18 22:28:43,607-agent-INFO- file_handler.py:263-[加载] 2 灰度变换.pptx → 1 个文档
+2026-06-18 22:28:43,608-agent-DEBUG- cch_preprocessor.py:51-[CCH] 从H1提取标题：灰度变换
+2026-06-18 22:28:48,099-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=151
+2026-06-18 22:28:48,099-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=灰度变换
+2026-06-18 22:28:48,862-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\2 灰度变换.pptx
+2026-06-18 22:28:48,862-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\2 灰度变换.pptx 加载成功（共9个chunk）
+2026-06-18 22:28:50,681-agent-INFO- file_handler.py:263-[加载] 1 绪论.pptx → 1 个文档
+2026-06-18 22:28:50,681-agent-DEBUG- cch_preprocessor.py:59-[CCH] 从文件名推导标题：1 绪论
+2026-06-18 22:28:54,579-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=171
+2026-06-18 22:28:54,579-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=1 绪论
+2026-06-18 22:28:55,278-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\1 绪论.pptx
+2026-06-18 22:28:55,278-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\1 绪论.pptx 加载成功（共6个chunk）
+2026-06-18 22:32:03,000-agent-INFO- file_handler.py:21-[Docling] 共享 DocumentConverter 已创建
+2026-06-18 22:32:03,035-agent-INFO- file_handler.py:263-[加载] 韩测final.html → 1 个文档
+2026-06-18 22:32:03,035-agent-DEBUG- cch_preprocessor.py:51-[CCH] 从H1提取标题：韩语单词学习卡片
+2026-06-18 22:32:06,257-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=93
+2026-06-18 22:32:06,257-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=韩语单词学习卡片
+2026-06-18 22:32:06,706-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\韩测final.html
+2026-06-18 22:32:06,706-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\韩测final.html 加载成功（共1个chunk）
+2026-06-18 22:32:35,764-agent-DEBUG- md5_store.py:121-[MD5Store] 已删除记录：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\韩测final.html
+2026-06-18 22:32:35,764-agent-INFO- vector_store.py:104-[加载知识库] 已移除：韩测final.html
+2026-06-18 22:35:04,879-agent-INFO- bm25_index.py:106-[BM25] 索引构建完成，共 77 条文档
+2026-06-18 22:35:04,881-agent-INFO- benchmark.py:179-[Benchmark] 初始化完成 — ChromaDB 共 0 个 chunk
+2026-06-18 22:35:04,885-agent-INFO- benchmark.py:887-[Benchmark] 加载 25 条测试查询: D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\config/benchmark_queries.yaml
+2026-06-18 22:35:04,885-agent-INFO- benchmark.py:402-[Benchmark] 开始测试 — 25 条查询 × 4 种策略 = 100 轮
+2026-06-18 22:35:05,391-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:35:05,393-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:05,783-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:05,784-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:05,784-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:35:06,168-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:06,168-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:06,579-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:06,580-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:06,977-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:06,977-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:06,978-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:07,345-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:07,345-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:07,714-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 1 个段落 （来自 1 个文档来源）
+2026-06-18 22:35:07,715-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:35:08,119-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:08,119-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:08,120-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:35:08,515-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:08,516-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:08,925-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:08,926-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:09,328-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:09,328-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:09,328-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:09,725-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:09,725-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:10,114-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:35:10,116-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:10,516-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:10,516-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:10,553-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:35:10,979-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:10,979-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:11,406-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:11,407-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:11,779-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:11,779-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:11,780-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 4 个文档来源）
+2026-06-18 22:35:12,202-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:12,202-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:12,615-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:12,617-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 4 个文档来源）
+2026-06-18 22:35:13,009-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:13,009-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:13,011-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 4 个文档来源）
+2026-06-18 22:35:13,440-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:13,440-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:13,825-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:13,826-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:14,243-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:14,243-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:14,244-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:14,614-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:14,614-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:15,029-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 1 个文档来源）
+2026-06-18 22:35:15,031-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:15,458-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:15,458-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:15,459-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:35:15,849-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:15,849-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:16,224-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:35:16,225-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:35:16,647-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:16,647-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:16,648-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:35:17,042-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:17,042-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:17,461-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:17,463-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:17,864-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:17,864-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:17,864-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:18,294-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:18,294-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:18,701-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:18,702-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:19,083-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:19,083-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:19,083-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:19,448-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:19,448-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:19,841-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:19,842-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 4 个文档来源）
+2026-06-18 22:35:20,225-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:20,225-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:20,225-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:20,640-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:20,641-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:21,025-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:21,026-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:21,421-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:21,421-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:21,422-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:21,824-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:21,824-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:22,214-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:22,215-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:22,635-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:22,635-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:22,635-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:23,048-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:23,048-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:23,431-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:23,432-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:23,815-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:23,816-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:23,816-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:24,235-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:24,235-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:24,619-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:24,620-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:25,030-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:25,030-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:25,031-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 4 个文档来源）
+2026-06-18 22:35:25,418-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:25,418-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:25,827-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:25,828-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 5 个文档来源）
+2026-06-18 22:35:26,214-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:26,214-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:26,214-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:26,714-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:26,714-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:27,074-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:27,075-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:27,471-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:27,471-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:27,472-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:27,834-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:27,834-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:28,300-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:35:28,310-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 4 个文档来源）
+2026-06-18 22:35:28,687-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:28,687-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:28,687-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:29,096-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:29,096-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:29,510-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 4 个文档来源）
+2026-06-18 22:35:29,511-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:29,881-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:29,881-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:29,882-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 4 个文档来源）
+2026-06-18 22:35:30,325-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:30,325-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:30,702-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:30,703-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 4 个文档来源）
+2026-06-18 22:35:31,123-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:31,123-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:31,124-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:31,732-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:31,732-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:32,286-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:35:32,288-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:32,831-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:32,831-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:32,832-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:33,481-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:33,482-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:33,981-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:33,982-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 4 个文档来源）
+2026-06-18 22:35:34,407-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:34,407-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:34,408-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:34,767-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:34,767-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:35,151-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:35:35,152-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 3 个文档来源）
+2026-06-18 22:35:35,551-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:35,551-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:35,551-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:35:35,940-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:35:35,940-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:35:35,940-agent-INFO- benchmark.py:429-[Benchmark] 全部测试完成
+
+2026-06-18 22:38:18,988-agent-INFO- file_handler.py:21-[Docling] 共享 DocumentConverter 已创建
+2026-06-18 22:38:19,678-agent-INFO- file_handler.py:263-[加载] 5 显著性检测.pptx → 1 个文档
+2026-06-18 22:38:19,679-agent-DEBUG- cch_preprocessor.py:59-[CCH] 从文件名推导标题：5 显著性检测
+2026-06-18 22:38:24,656-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=208
+2026-06-18 22:38:24,656-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=5 显著性检测
+2026-06-18 22:38:25,489-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\5 显著性检测.pptx
+2026-06-18 22:38:25,489-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\5 显著性检测.pptx 加载成功（共10个chunk）
+2026-06-18 22:38:27,420-agent-INFO- file_handler.py:263-[加载] 第3章 关联规则挖掘和Apriori算法.pptx → 1 个文档
+2026-06-18 22:38:27,420-agent-DEBUG- cch_preprocessor.py:51-[CCH] 从H1提取标题：数据挖掘算法原理及实现
+2026-06-18 22:38:30,420-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=154
+2026-06-18 22:38:30,420-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=数据挖掘算法原理及实现
+2026-06-18 22:38:31,228-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第3章 关联规则挖掘和Apriori算法.pptx
+2026-06-18 22:38:31,228-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第3章 关联规则挖掘和Apriori算法.pptx 加载成功（共11个chunk）
+2026-06-18 22:38:31,339-agent-INFO- file_handler.py:263-[加载] 第1章 绪论 (2).pptx → 1 个文档
+2026-06-18 22:38:31,339-agent-DEBUG- cch_preprocessor.py:51-[CCH] 从H1提取标题：数据挖掘算法原理与实现
+2026-06-18 22:38:34,228-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=206
+2026-06-18 22:38:34,229-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=数据挖掘算法原理与实现
+2026-06-18 22:38:35,119-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第1章 绪论 (2).pptx
+2026-06-18 22:38:35,119-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第1章 绪论 (2).pptx 加载成功（共18个chunk）
+2026-06-18 22:38:35,274-agent-INFO- file_handler.py:263-[加载] 第6章人工神经网络.pptx → 1 个文档
+2026-06-18 22:38:35,274-agent-DEBUG- cch_preprocessor.py:51-[CCH] 从H1提取标题：第6章  人工神经网络算法
+2026-06-18 22:38:40,737-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=175
+2026-06-18 22:38:40,737-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=第6章  人工神经网络算法
+2026-06-18 22:38:41,713-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第6章人工神经网络.pptx
+2026-06-18 22:38:41,714-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第6章人工神经网络.pptx 加载成功（共21个chunk）
+2026-06-18 22:38:42,057-agent-INFO- file_handler.py:263-[加载] 第9章  K-中心点聚类算法.pptx → 1 个文档
+2026-06-18 22:38:42,057-agent-DEBUG- cch_preprocessor.py:51-[CCH] 从H1提取标题：第9章  K-中心点聚类算法
+2026-06-18 22:38:45,512-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=164
+2026-06-18 22:38:45,512-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=第9章  K-中心点聚类算法
+2026-06-18 22:38:46,324-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第9章  K-中心点聚类算法.pptx
+2026-06-18 22:38:46,325-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第9章  K-中心点聚类算法.pptx 加载成功（共11个chunk）
+2026-06-18 22:38:47,469-agent-INFO- file_handler.py:263-[加载] 6 图像缩放.pptx → 1 个文档
+2026-06-18 22:38:47,469-agent-DEBUG- cch_preprocessor.py:51-[CCH] 从H1提取标题：图像缩放
+2026-06-18 22:38:50,673-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=147
+2026-06-18 22:38:50,673-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=图像缩放
+2026-06-18 22:38:51,548-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\6 图像缩放.pptx
+2026-06-18 22:38:51,548-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\6 图像缩放.pptx 加载成功（共14个chunk）
+2026-06-18 22:38:51,954-agent-INFO- file_handler.py:263-[加载] 第7章 支持向量机.pptx → 1 个文档
+2026-06-18 22:38:51,954-agent-DEBUG- cch_preprocessor.py:51-[CCH] 从H1提取标题：第7章 支持向量机
+2026-06-18 22:38:54,910-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=158
+2026-06-18 22:38:54,910-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=第7章 支持向量机
+2026-06-18 22:38:55,853-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第7章 支持向量机.pptx
+2026-06-18 22:38:55,853-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第7章 支持向量机.pptx 加载成功（共16个chunk）
+2026-06-18 22:38:57,520-agent-INFO- file_handler.py:263-[加载] 图像去雾.pptx → 1 个文档
+2026-06-18 22:38:57,520-agent-DEBUG- cch_preprocessor.py:51-[CCH] 从H1提取标题：图像增强—图像去雾
+2026-06-18 22:39:01,146-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=164
+2026-06-18 22:39:01,146-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=图像增强—图像去雾
+2026-06-18 22:39:01,872-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\图像去雾.pptx
+2026-06-18 22:39:01,872-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\图像去雾.pptx 加载成功（共7个chunk）
+2026-06-18 22:39:02,618-agent-INFO- file_handler.py:263-[加载] 第4章 决策树分类算法.pptx → 1 个文档
+2026-06-18 22:39:02,618-agent-DEBUG- cch_preprocessor.py:51-[CCH] 从H1提取标题：第4章  决策树分类算法
+2026-06-18 22:39:06,343-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=146
+2026-06-18 22:39:06,343-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=第4章  决策树分类算法
+2026-06-18 22:39:08,227-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第4章 决策树分类算法.pptx
+2026-06-18 22:39:08,227-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第4章 决策树分类算法.pptx 加载成功（共36个chunk）
+2026-06-18 22:39:08,413-agent-INFO- file_handler.py:263-[加载] 第5章  贝叶斯分类算法.pptx → 1 个文档
+2026-06-18 22:39:08,413-agent-DEBUG- cch_preprocessor.py:51-[CCH] 从H1提取标题：第5章  贝叶斯分类算法
+2026-06-18 22:39:13,091-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=194
+2026-06-18 22:39:13,091-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=第5章  贝叶斯分类算法
+2026-06-18 22:39:14,786-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第5章  贝叶斯分类算法.pptx
+2026-06-18 22:39:14,786-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第5章  贝叶斯分类算法.pptx 加载成功（共35个chunk）
+2026-06-18 22:39:15,284-agent-INFO- file_handler.py:263-[加载] 第8章 K-means聚类算法.pptx → 1 个文档
+2026-06-18 22:39:15,285-agent-DEBUG- cch_preprocessor.py:51-[CCH] 从H1提取标题：第8章   K-means聚类算法
+2026-06-18 22:39:19,131-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=133
+2026-06-18 22:39:19,131-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=第8章   K-means聚类算法
+2026-06-18 22:39:20,673-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第8章 K-means聚类算法.pptx
+2026-06-18 22:39:20,674-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第8章 K-means聚类算法.pptx 加载成功（共27个chunk）
+2026-06-18 22:39:23,189-agent-INFO- file_handler.py:263-[加载] 第2章 数据预处理.pptx → 1 个文档
+2026-06-18 22:39:23,189-agent-DEBUG- cch_preprocessor.py:51-[CCH] 从H1提取标题：第二章  数据预处理
+2026-06-18 22:39:27,478-agent-DEBUG- cch_preprocessor.py:86-[CCH] LLM摘要生成成功，长度=159
+2026-06-18 22:39:27,478-agent-DEBUG- vector_store.py:131-[加载知识库] CCH预处理完成：标题=第二章  数据预处理
+2026-06-18 22:39:29,116-agent-DEBUG- md5_store.py:110-[MD5Store] MD5保存成功：D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第2章 数据预处理.pptx
+2026-06-18 22:39:29,116-agent-INFO- vector_store.py:170-[加载知识库] D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\data\第2章 数据预处理.pptx 加载成功（共30个chunk）
+2026-06-18 22:43:29,143-agent-INFO- bm25_index.py:106-[BM25] 索引构建完成，共 313 条文档
+2026-06-18 22:43:29,145-agent-INFO- benchmark.py:179-[Benchmark] 初始化完成 — ChromaDB 共 0 个 chunk
+2026-06-18 22:43:29,147-agent-INFO- benchmark.py:887-[Benchmark] 加载 18 条测试查询: D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\config/benchmark_queries.yaml
+2026-06-18 22:43:29,148-agent-INFO- benchmark.py:402-[Benchmark] 开始测试 — 18 条查询 × 4 种策略 = 72 轮
+2026-06-18 22:43:29,545-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:29,547-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:29,922-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:29,922-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:29,923-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:30,316-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:30,316-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:30,715-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 3 个文档来源）
+2026-06-18 22:43:30,716-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:43:31,162-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:31,162-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:31,163-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:43:31,539-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:31,539-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:31,941-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 1 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:31,943-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:32,324-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:32,324-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:32,325-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:32,711-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:32,711-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:33,080-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:33,082-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:43:33,462-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:33,462-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:33,463-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:33,866-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:33,868-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:34,269-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:34,270-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 2 个文档来源）
+2026-06-18 22:43:34,706-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:34,706-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:34,707-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:35,075-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:35,076-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:35,516-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:35,518-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:35,920-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:35,921-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:35,921-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:36,307-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:36,307-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:36,756-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:36,758-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:43:37,152-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:37,152-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:37,153-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:43:37,568-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:37,568-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:37,916-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:37,917-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:38,328-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:38,328-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:38,328-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:38,736-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:38,736-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:39,148-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:39,150-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:39,555-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:39,555-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:39,556-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:39,988-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:39,988-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:40,371-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:40,372-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 3 个文档来源）
+2026-06-18 22:43:40,754-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:40,754-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:40,755-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:43:41,177-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:41,177-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:41,606-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:41,607-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:41,970-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:41,970-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:41,970-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:42,341-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:42,341-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:42,862-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:42,864-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 2 个文档来源）
+2026-06-18 22:43:43,242-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:43,242-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:43,243-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:43,625-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:43,625-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:44,062-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:43:44,064-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 2 个文档来源）
+2026-06-18 22:43:44,453-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:44,453-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:44,453-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:43:44,854-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:44,854-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:45,256-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:45,257-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:45,622-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:45,623-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:45,623-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 1 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:46,022-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:46,023-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:46,386-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:46,388-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:46,777-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:46,777-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:46,778-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:47,153-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:47,153-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:47,572-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:47,573-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:48,006-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:48,006-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:48,007-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:48,418-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:48,418-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:48,876-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:48,878-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:43:49,287-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:49,287-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:49,288-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:49,703-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:49,703-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:50,089-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 1 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:50,090-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:50,482-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:50,483-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:50,483-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:43:50,854-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:43:50,854-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:43:50,855-agent-INFO- benchmark.py:429-[Benchmark] 全部测试完成
+
+2026-06-18 22:49:46,157-agent-INFO- bm25_index.py:106-[BM25] 索引构建完成，共 313 条文档
+2026-06-18 22:49:46,158-agent-INFO- benchmark.py:179-[Benchmark] 初始化完成 — ChromaDB 共 0 个 chunk
+2026-06-18 22:49:46,161-agent-INFO- benchmark.py:887-[Benchmark] 加载 18 条测试查询: D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\config/benchmark_queries.yaml
+2026-06-18 22:49:46,161-agent-INFO- benchmark.py:402-[Benchmark] 开始测试 — 18 条查询 × 4 种策略 = 72 轮
+2026-06-18 22:49:46,620-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:46,621-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:47,067-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:47,068-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:47,068-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:47,481-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:47,481-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:47,881-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 3 个文档来源）
+2026-06-18 22:49:47,883-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:49:48,280-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:48,280-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:48,280-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:49:48,645-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:48,645-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:49,067-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 1 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:49,069-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:49,503-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:49,503-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:49,504-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:49,919-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:49,919-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:50,309-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:50,311-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:49:50,681-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:50,681-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:50,682-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:51,083-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:51,084-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:51,463-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:51,465-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 2 个文档来源）
+2026-06-18 22:49:51,861-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:51,861-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:51,861-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:52,295-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:52,295-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:52,682-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:52,684-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:53,073-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:53,073-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:53,074-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:53,508-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:53,508-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:53,898-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:53,899-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:49:54,318-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:54,318-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:54,319-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:49:54,729-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:54,729-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:55,113-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:55,115-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:55,527-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:55,527-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:55,527-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:55,953-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:55,954-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:56,309-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:56,311-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:56,704-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:56,704-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:56,704-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:57,078-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:57,078-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:57,464-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:57,466-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 3 个文档来源）
+2026-06-18 22:49:57,861-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:57,862-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:57,862-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:49:58,257-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:58,257-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:58,709-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:58,711-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:59,117-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:59,117-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:59,117-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:59,538-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:49:59,538-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:49:59,938-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:49:59,940-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 2 个文档来源）
+2026-06-18 22:50:00,434-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:50:00,435-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:50:00,435-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:50:00,883-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:50:00,883-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:50:01,274-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:50:01,275-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 2 个文档来源）
+2026-06-18 22:50:01,666-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:50:01,666-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:50:01,666-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:50:02,116-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:50:02,116-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:50:02,528-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:50:02,530-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:50:02,961-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:50:02,961-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:50:02,962-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 1 个段落 （来自 1 个文档来源）
+2026-06-18 22:50:03,341-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:50:03,341-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:50:03,737-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:50:03,739-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:50:04,116-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:50:04,116-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:50:04,117-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:50:04,551-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:50:04,551-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:50:04,943-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:50:04,945-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:50:05,342-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:50:05,342-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:50:05,342-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:50:05,774-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:50:05,774-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:50:06,155-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:50:06,157-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:50:06,574-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:50:06,585-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:50:06,586-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:50:06,967-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:50:06,967-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:50:07,346-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 1 个段落 （来自 1 个文档来源）
+2026-06-18 22:50:07,348-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:50:07,770-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:50:07,770-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:50:07,771-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:50:08,167-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:50:08,167-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:50:08,167-agent-INFO- benchmark.py:429-[Benchmark] 全部测试完成
+
+2026-06-18 22:53:40,424-agent-INFO- bm25_index.py:106-[BM25] 索引构建完成，共 313 条文档
+2026-06-18 22:53:40,425-agent-INFO- benchmark.py:179-[Benchmark] 初始化完成 — ChromaDB 共 0 个 chunk
+2026-06-18 22:53:40,428-agent-INFO- benchmark.py:887-[Benchmark] 加载 18 条测试查询: D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\config/benchmark_queries.yaml
+2026-06-18 22:53:40,428-agent-INFO- benchmark.py:402-[Benchmark] 开始测试 — 18 条查询 × 4 种策略 = 72 轮
+2026-06-18 22:53:40,917-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:40,919-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:41,323-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:41,323-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:41,324-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:41,723-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:41,723-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:42,145-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 3 个文档来源）
+2026-06-18 22:53:42,147-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:53:42,552-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:42,552-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:42,552-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:53:42,944-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:42,944-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:43,353-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 1 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:43,355-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:43,781-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:43,781-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:43,782-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:44,192-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:44,192-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:44,608-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:44,610-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:53:45,016-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:45,016-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:45,016-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:45,467-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:45,467-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:45,842-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:45,843-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 2 个文档来源）
+2026-06-18 22:53:46,247-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:46,247-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:46,248-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:46,673-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:46,673-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:47,104-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:47,106-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:47,521-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:47,521-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:47,522-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:47,959-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:47,959-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:48,349-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:48,351-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:53:48,791-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:48,791-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:48,792-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:53:49,220-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:49,220-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:49,623-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:49,624-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:50,003-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:50,003-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:50,004-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:50,385-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:50,385-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:50,794-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:50,796-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:51,215-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:51,215-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:51,216-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:51,630-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:51,630-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:52,079-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:52,080-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 3 个文档来源）
+2026-06-18 22:53:52,550-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:52,550-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:52,551-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:53:52,988-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:52,988-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:53,388-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:53,390-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:53,834-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:53,834-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:53,835-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:54,212-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:54,212-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:54,639-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:54,641-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 2 个文档来源）
+2026-06-18 22:53:55,023-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:55,023-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:55,024-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:55,406-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:55,406-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:55,811-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:53:55,812-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 2 个文档来源）
+2026-06-18 22:53:56,211-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:56,211-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:56,212-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 2 个文档来源）
+2026-06-18 22:53:56,622-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:56,622-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:57,034-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:57,036-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:57,437-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:57,437-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:57,437-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 1 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:57,856-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:57,856-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:58,277-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:58,278-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:58,667-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:58,668-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:58,668-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:59,106-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:59,106-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:59,518-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:59,520-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:53:59,942-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:53:59,942-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:53:59,943-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:54:00,339-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:54:00,339-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:54:00,703-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:54:00,705-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 2 个文档来源）
+2026-06-18 22:54:01,080-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:54:01,080-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:54:01,081-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:54:01,468-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:54:01,468-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:54:01,882-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 1 个段落 （来自 1 个文档来源）
+2026-06-18 22:54:01,884-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 4 个段落 （来自 1 个文档来源）
+2026-06-18 22:54:02,278-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:54:02,278-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:54:02,279-agent-DEBUG- segment_extractor.py:47-[Segment] 输入 5 个chunk → 输出 3 个段落 （来自 1 个文档来源）
+2026-06-18 22:54:02,683-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:54:02,683-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:54:02,684-agent-INFO- benchmark.py:429-[Benchmark] 全部测试完成
+
+2026-06-18 22:58:22,585-agent-INFO- bm25_index.py:106-[BM25] 索引构建完成，共 313 条文档
+2026-06-18 22:58:22,587-agent-INFO- benchmark.py:179-[Benchmark] 初始化完成 — ChromaDB 共 0 个 chunk
+2026-06-18 22:58:22,590-agent-INFO- benchmark.py:892-[Benchmark] 加载 18 条测试查询: D:\Desktop\py\AI大模型RAG和智能体开发_Agent项目\config/benchmark_queries.yaml
+2026-06-18 22:58:22,590-agent-INFO- benchmark.py:407-[Benchmark] 开始测试 — 18 条查询 × 4 种策略 = 72 轮
+2026-06-18 22:58:23,447-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:23,448-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:23,906-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:23,906-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:24,706-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:24,706-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:25,145-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:25,145-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:26,028-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:26,028-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:26,423-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:26,424-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:27,270-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:27,271-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:27,698-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:27,698-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:28,533-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:28,533-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:28,965-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:28,965-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:29,842-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:29,842-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:30,252-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:30,252-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:31,061-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:31,061-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:31,453-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:31,454-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:32,345-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:32,345-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:32,789-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:32,789-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:33,644-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:33,644-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:34,049-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:34,049-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:34,857-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:34,857-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:35,241-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:35,241-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:36,042-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:36,043-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:36,447-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:36,447-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:37,267-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:37,267-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:37,691-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:37,691-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:38,458-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:38,458-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:38,843-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:38,843-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:39,647-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:39,647-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:40,046-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:40,046-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:40,944-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:40,944-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:41,399-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:41,399-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:42,173-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:42,173-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:42,580-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:42,580-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:43,322-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:43,322-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:43,721-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:43,721-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:44,531-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:44,531-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:45,003-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 22:58:45,003-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 22:58:45,004-agent-INFO- benchmark.py:434-[Benchmark] 全部测试完成
+
