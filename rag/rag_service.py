@@ -1,12 +1,12 @@
-from xml.dom.minidom import Document
-
 from langchain_core.output_parsers import StrOutputParser
+from langchain_core.documents import Document
 
 from model.factory import chat_model
 from rag.vector_store import VectorStoreService
+from rag.segment_extractor import SegmentExtractor
 from langchain_core.prompts import PromptTemplate
 
-from utils.config_handler import prompts_conf
+from utils.config_handler import prompts_conf, chroma_conf
 from utils.logger_handler import logger
 from utils.path_tool import get_abs_path
 
@@ -17,7 +17,10 @@ class RagSummarizeService:
 
     def __init__(self, vector_store: VectorStoreService):
         self.vector_store = vector_store
-        self.retriever = self.vector_store.get_retriever()
+        # 融合检索器（BM25 + Dense → RRF → Top K）
+        self.fusion_retriever = self.vector_store.get_fusion_retriever()
+        # 段落提取器（合并相邻chunk为连续段落）
+        self.segment_extractor = SegmentExtractor()
         self.prompt_text = self._load_prompt_text()
         self.prompt_template = PromptTemplate.from_template(self.prompt_text)
         self.model = chat_model
@@ -54,25 +57,55 @@ class RagSummarizeService:
         chain = self.prompt_template | self.model |StrOutputParser()
         return chain
 
-    def retriever_docs(self,query: str)-> list[Document]:
-        return self.retriever.invoke(query)
+    def retriever_docs(self, query: str) -> list[Document]:
+        # Step 1: 融合检索（BM25 + Dense → RRF → Top K）
+        fused_docs = self.fusion_retriever.retrieve(query)
 
-    def rag_summarize(self,query: str) -> str:
+        # Step 2: 段落提取（合并同一文档来源的相邻chunk，依赖CCH写入的chunk_index）
+        segment_enabled = chroma_conf.get('segment', {}).get('enabled', True)
+        if segment_enabled:
+            # 检测chunk_index是否存在（CCH关闭时不会写入该字段）
+            has_chunk_index = any(
+                doc.metadata.get('chunk_index') is not None
+                for doc in fused_docs
+            )
+            if not has_chunk_index:
+                logger.warning(
+                    "[检索] 段落合并已开启(segment.enabled=true)，但文档缺少chunk_index "
+                    "元数据（CCH可能未开启），跳过合并"
+                )
+                return fused_docs
+
+            segments = self.segment_extractor.extract_segments(fused_docs)
+            return segments
+
+        return fused_docs
+
+    def rag_summarize(self, query: str) -> str:
         '''
-        总结召回结果,注入提示词模板，调用model，返回输出
-        :param query:用户问题
-        :return:模型最终输出的str
+        总结召回结果，注入提示词模板，调用model，返回输出
+        :param query: 用户问题
+        :return: 模型最终输出的str
         '''
-        input_dict={}
+        input_dict = {}
 
         context_docs = self.retriever_docs(query)
-        context=""
-        counter=0
+        context = ""
+        counter = 0
         for doc in context_docs:
-            counter+=1
-            context+=f"【参考资料{counter}】：参考资料：{doc.page_content} | 参考元数据：{doc.metadata}\n"
-        input_dict["input"]=query
-        input_dict["context"]=context
+            counter += 1
+            # 标记合并信息（段落提取后的相邻chunk合并）
+            merge_info = ""
+            if doc.metadata.get('merged_from', 1) > 1:
+                chunk_range = doc.metadata.get('chunk_range', '?')
+                merge_info = f" [合并自{doc.metadata['merged_from']}个连续片段({chunk_range})]"
+
+            context += (
+                f"【参考资料{counter}】{merge_info}\n"
+                f"{doc.page_content}\n"
+            )
+        input_dict["input"] = query
+        input_dict["context"] = context
 
         return self.chain.invoke(input_dict)
 
