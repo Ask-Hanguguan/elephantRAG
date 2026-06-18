@@ -1,0 +1,22 @@
+2026-06-18 16:49:57,646-agent-DEBUG- cch_preprocessor.py:53-[CCH] 从H1提取标题：扫地机器人使用指南
+2026-06-18 16:50:43,898-agent-INFO- bm25_index.py:106-[BM25] 索引构建完成，共 371 条文档
+2026-06-18 16:51:27,785-agent-INFO- bm25_index.py:106-[BM25] 索引构建完成，共 371 条文档
+2026-06-18 16:52:46,159-agent-INFO- bm25_index.py:106-[BM25] 索引构建完成，共 371 条文档
+2026-06-18 16:52:47,220-agent-DEBUG- fusion_retriever.py:62-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 16:52:47,220-agent-DEBUG- fusion_retriever.py:71-[Fusion] RRF融合后选取Top 5条
+2026-06-18 16:53:25,811-agent-DEBUG- segment_extractor.py:48-[Segment] 输入 5 个chunk → 输出 2 个段落 （来自 2 个文档来源）
+2026-06-18 16:55:15,216-agent-INFO- bm25_index.py:106-[BM25] 索引构建完成，共 371 条文档
+2026-06-18 16:55:57,846-agent-INFO- bm25_index.py:106-[BM25] 索引构建完成，共 371 条文档
+2026-06-18 16:55:58,112-agent-DEBUG- fusion_retriever.py:62-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 16:55:58,113-agent-DEBUG- fusion_retriever.py:71-[Fusion] RRF融合后选取Top 5条
+2026-06-18 16:55:58,113-agent-DEBUG- segment_extractor.py:48-[Segment] 输入 5 个chunk → 输出 5 个段落 （来自 1 个文档来源）
+2026-06-18 16:56:37,404-agent-INFO- bm25_index.py:106-[BM25] 索引构建完成，共 371 条文档
+2026-06-18 17:21:04,644-agent-DEBUG- cch_preprocessor.py:51-[CCH] 从H1提取标题：扫地机器人使用指南
+2026-06-18 17:43:16,037-agent-INFO- bm25_index.py:106-[BM25] 索引构建完成，共 371 条文档
+2026-06-18 18:20:27,209-agent-INFO- bm25_index.py:106-[BM25] 索引构建完成，共 371 条文档
+2026-06-18 18:20:28,081-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 18:20:28,081-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 18:42:49,719-agent-INFO- bm25_index.py:106-[BM25] 索引构建完成，共 371 条文档
+2026-06-18 18:42:49,977-agent-DEBUG- fusion_retriever.py:60-[Fusion] BM25召回=10条, Dense召回=10条
+2026-06-18 18:42:49,977-agent-DEBUG- fusion_retriever.py:69-[Fusion] RRF融合后选取Top 5条
+2026-06-18 18:42:49,978-agent-WARNING- <string>:73-[检索] 段落合并已开启(segment.enabled=true)，但文档缺少chunk_index 元数据（CCH可能未开启），跳过合并

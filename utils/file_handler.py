@@ -3,7 +3,7 @@ import os
 from typing import Optional
 from utils.logger_handler import logger
 from langchain_core.documents import Document
-from langchain_community.document_loaders import CSVLoader,PyPDFLoader,TextLoader
+from langchain_docling import DoclingLoader
 
 def get_file_md5_hex(filepath: str) -> Optional[str]:
     '''
@@ -66,9 +66,17 @@ def listdir_with_allowed_type(path: str, allowed_types: tuple[str]):
 
     return tuple(files)
 
-#一次性加载，大文件会撑爆内存
-def pdf_loader(filepath:str, passwd=None)->list[Document]:
-    return PyPDFLoader(filepath,passwd).load()
-
-def txt_loader(filepath:str)->list[Document]:
-    return TextLoader(filepath,encoding='utf-8').load()
+def docling_loader(filepath: str) -> list[Document]:
+    """
+    使用 DoclingLoader 懒加载文档（支持 PDF/DOCX/HTML/PPTX/图片等）
+    内部使用 lazy_load() 逐文档处理，返回 list[Document] 保持接口兼容。
+    """
+    try:
+        loader = DoclingLoader(
+            file_path=filepath,
+            export_type="markdown",
+        )
+        return list(loader.lazy_load())
+    except Exception as e:
+        logger.error(f"Docling 加载失败 [{filepath}]: {str(e)}")
+        return []
