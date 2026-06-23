@@ -1,0 +1,28 @@
+# ============================================================
+# 企业文档智能问答 - Docker Compose 编排
+# ============================================================
+# 启动: docker compose up -d
+# 日志: docker compose logs -f
+# 停止: docker compose down
+
+services:
+  app:
+    build: .
+    container_name: enterprise-qa
+    ports:
+      - "8000:8000"   # FastAPI
+      - "8501:8501"   # Streamlit
+    volumes:
+      # 数据持久化(重启不丢数据)
+      - ./data:/app/data           # 上传的文档
+      - ./chroma_db:/app/chroma_db # 向量库
+      - ./logs:/app/logs           # 日志
+    env_file:
+      - .env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s

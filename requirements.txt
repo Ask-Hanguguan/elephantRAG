@@ -27,3 +27,13 @@ jieba>=0.42.0
 
 # ---- 工具 ----
 pyyaml>=6.0
+
+# ---- REST API (企业化:系统集成) ----
+fastapi>=0.104.0
+uvicorn>=0.24.0
+python-multipart>=0.0.6
+
+# ---- 认证 (企业化:JWT + 密码哈希) ----
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+bcrypt>=4.0.0

@@ -1,2 +1,19 @@
+# ============================================================
+# 模型提供商配置
+# ============================================================
+
+# 模型提供商: dashscope | ollama
+# dashscope: 通义千问云API(需 DASHSCOPE_API_KEY 环境变量)
+# ollama: 本地模型私有化部署(需本地运行 Ollama 服务)
+provider: dashscope
+
+# ---- DashScope (通义千问云API) ----
+# 顶层配置保持向后兼容,默认为 DashScope
 chat_model_name: qwen3-max
 embedding_model_name: text-embedding-v1
+
+# ---- Ollama (本地模型,私有化部署) ----
+ollama:
+  base_url: http://localhost:11434
+  chat_model_name: qwen2.5:7b
+  embedding_model_name: nomic-embed-text

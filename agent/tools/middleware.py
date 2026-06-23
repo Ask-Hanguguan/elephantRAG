@@ -23,10 +23,6 @@ def monitor_tool(
     try:
         result = handler(request)
         logger.info(f"[tool monitor]工具{request.tool_call['name']}调用成功")
-
-        if request.tool_call['name']=='fill_context_for_report':
-            logger.info(f"[tool monitor]fill_context_for_report工具被调用，注入上下文 report=True")
-            request.runtime.context['report'] = True
         return result
 
     except Exception as e:

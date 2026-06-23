@@ -1,0 +1,20 @@
+# Agent 智能体配置
+# ============================================================
+
+# ReAct Agent 基础参数
+recursion_limit: 20          # 最大递归轮次(防止死循环)
+stream_mode: values           # 流式输出模式: values | updates | messages
+
+# 工具调用监控
+monitor:
+  enabled: true               # 是否启用工具调用监控中间件
+  log_args: true              # 是否记录工具调用参数
+  log_result: false           # 是否记录工具返回结果(可能较大)
+
+# 模型前置日志
+before_model_log:
+  enabled: true               # 是否在每次模型调用前记录日志
+
+# 报告生成模式(预留,当前未启用)
+report_mode:
+  enabled: false              # 报告生成功能开关

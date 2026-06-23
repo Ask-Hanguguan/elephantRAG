@@ -1,29 +1,44 @@
-from abc import ABC,abstractmethod
-from langchain_community.chat_models.tongyi import ChatTongyi,BaseChatModel
-from langchain_community.embeddings import DashScopeEmbeddings
-from langchain_core.embeddings import Embeddings
+"""
+模型工厂
+================================================
+通过 Provider 抽象层创建 LLM 和 Embedding 实例,
+支持根据 config/rag.yaml 的 provider 配置切换:
+  - dashscope: 通义千问云 API(默认)
+  - ollama: 本地模型私有化部署
+
+向后兼容:保留模块级单例 chat_model / embed_model
+新代码建议使用工厂函数 get_chat_model() / get_embed_model()
+"""
 from typing import Optional
-from utils.config_handler import rag_conf
 
-class BaseChatModelFactory(ABC):
-    @abstractmethod     # 强制子类必须实现某些方法
-    def generator(self)->Optional[BaseChatModel | Embeddings]:
-        pass
+from langchain_community.chat_models.tongyi import BaseChatModel
+from langchain_core.embeddings import Embeddings
 
-class ChatModelFactory(BaseChatModelFactory):
-    def generator(self)->Optional[BaseChatModel | Embeddings]:
-        return ChatTongyi(model=rag_conf["chat_model_name"])
+from model.provider import get_llm_provider, get_embedding_provider
 
-class EmbeddingsFactory(BaseChatModelFactory):
-    def generator(self)->Optional[BaseChatModel | Embeddings]:
-        return DashScopeEmbeddings(model=rag_conf["embedding_model_name"])
 
-chat_model = ChatModelFactory().generator()
-embed_model = EmbeddingsFactory().generator()
+def get_chat_model() -> BaseChatModel:
+    """
+    工厂函数:根据配置创建 LLM 实例
 
-'''
-你需要根据不同条件创建不同对象？
-└─ 是 → 创建逻辑在多处重复？
-    └─ 是 → 用工厂模式
-    └─ 否 → 写个函数就行
-'''
+    :return: BaseChatModel 实例
+    """
+    return get_llm_provider().create_llm()
+
+
+def get_embed_model() -> Embeddings:
+    """
+    工厂函数:根据配置创建 Embedding 实例
+
+    :return: Embeddings 实例
+    """
+    return get_embedding_provider().create_embedding()
+
+
+# ============================================================
+# 向后兼容:模块级单例
+# 现有代码 `from model.factory import chat_model` 仍可使用
+# 新代码建议使用 get_chat_model() / get_embed_model() 工厂函数
+# ============================================================
+chat_model: Optional[BaseChatModel] = get_chat_model()
+embed_model: Optional[Embeddings] = get_embed_model()
