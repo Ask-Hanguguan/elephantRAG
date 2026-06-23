@@ -93,10 +93,7 @@ pip install -r requirements.txt
 # 3. 加载文档到知识库
 python rag/vector_store.py
 
-# 4. (可选) 运行 benchmark 评估检索效果
-python rag/benchmark.py
-
-# 5. 启动 Web 界面
+# 4. 启动 Web 界面
 streamlit run app.py
 ```
 
