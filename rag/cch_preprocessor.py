@@ -214,31 +214,31 @@ class CCHPreprocessor(object):
 
 if __name__ == '__main__':
     # 简单自测：用一段模拟markdown验证解析逻辑
-    sample_text = """# 机器学习课程复习指南
+    sample_text = """# XX项目技术方案
 
-这是文档的引言部分，介绍机器学习的基本概念。
+本文档描述了XX项目的整体技术架构和实施方案。
 
-## 第一章 监督学习概述
-监督学习是机器学习的重要分支。
+## 一、项目概述
+本项目旨在建设企业级数据中台。
 
-### 1.1 线性回归
-线性回归用于预测连续值。
+### 1.1 建设目标
+实现数据资产的统一管理和高效利用。
 
-### 1.2 逻辑回归
-逻辑回归用于二分类问题。
+### 1.2 技术选型
+采用微服务架构，容器化部署。
 
-## 第二章 无监督学习
-无监督学习不需要标注数据。
+## 二、系统设计
+系统分为数据采集、数据处理、数据服务三层。
 
-### 2.1 K-Means聚类
-K-Means是一种常用的聚类算法。
+### 2.1 数据采集层
+支持多种数据源的实时和批量采集。
 
-### 2.2 主成分分析
-PCA用于降维处理。
+### 2.2 数据处理层
+基于Flink进行流批一体处理。
 """
 
     preprocessor = CCHPreprocessor()
-    title = preprocessor.extract_title("机器学习复习指南.pdf", sample_text)
+    title = preprocessor.extract_title("XX项目技术方案.pdf", sample_text)
     section_map = preprocessor.parse_section_tree(sample_text)
 
     print(f"标题: {title}")
@@ -247,11 +247,11 @@ PCA用于降维处理。
         print(f"  offset={offset:4d}  ->  {path}")
 
     # 模拟一个chunk定位
-    chunk = "K-Means是一种常用的聚类算法。"
+    chunk = "基于Flink进行流批一体处理。"
     section = preprocessor.determine_section(chunk, sample_text, section_map)
     print(f"\nChunk: \"{chunk}\"")
     print(f"所属章节: {section}")
 
     # 查看CCH头部格式
     print(f"\nCCH头部示例:")
-    print(preprocessor.build_cch_header(title, "本文介绍机器学习的基本概念和监督学习方法", section))
+    print(preprocessor.build_cch_header(title, "本文档描述了XX项目的整体技术架构和实施方案", section))
