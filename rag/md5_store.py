@@ -1,4 +1,4 @@
-import sqlite3
+﻿import sqlite3
 from typing import Optional
 from utils.config_handler import chroma_conf
 from utils.logger_handler import logger
@@ -9,7 +9,7 @@ import os
 class MD5Store(object):
     def __init__(self):
         path = get_abs_path(chroma_conf['persist_directory'])
-        self.conn = sqlite3.connect(os.path.join(path, chroma_conf['md5_hex_store']))
+        self.conn = sqlite3.connect(os.path.join(path, chroma_conf['md5_hex_store']), check_same_thread=False)
         self.cursor = self.conn.cursor()
         self._old_md5s = []  # 迁移时保留的旧MD5列表
         self.create_table()
@@ -140,3 +140,4 @@ if __name__ == '__main__':
     # 测试删除
     store.delete_by_path("/test/path/file.txt")
     print(f"删除后记录数：{store.count()}")
+

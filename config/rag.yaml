@@ -1,19 +1,27 @@
-# ============================================================
-# 模型提供商配置
+﻿# ============================================================
+# 妯″瀷鎻愪緵鍟嗛厤缃?
 # ============================================================
 
-# 模型提供商: dashscope | ollama
-# dashscope: 通义千问云API(需 DASHSCOPE_API_KEY 环境变量)
-# ollama: 本地模型私有化部署(需本地运行 Ollama 服务)
+# 妯″瀷鎻愪緵鍟? dashscope | ollama
+# dashscope: 閫氫箟鍗冮棶浜慉PI(闇€ DASHSCOPE_API_KEY 鐜鍙橀噺)
+# ollama: 鏈湴妯″瀷绉佹湁鍖栭儴缃?闇€鏈湴杩愯 Ollama 鏈嶅姟)
 provider: dashscope
 
-# ---- DashScope (通义千问云API) ----
-# 顶层配置保持向后兼容,默认为 DashScope
+# ---- DashScope (閫氫箟鍗冮棶浜慉PI) ----
+# 椤跺眰閰嶇疆淇濇寔鍚戝悗鍏煎,榛樿涓?DashScope
 chat_model_name: qwen3-max
 embedding_model_name: text-embedding-v1
 
-# ---- Ollama (本地模型,私有化部署) ----
+# ---- Ollama (鏈湴妯″瀷,绉佹湁鍖栭儴缃? ----
 ollama:
   base_url: http://localhost:11434
   chat_model_name: qwen2.5:7b
   embedding_model_name: nomic-embed-text
+
+# ---- 图片视觉描述（PDF图表/插图/扫描件识别） ----
+# 用 DashScope VL 模型描述 PDF 中的图片，注入文档内容中以支持检索
+vision:
+  enabled: true
+  model_name: qwen-vl-max
+  max_images_per_page: 3
+  prompt: "用中文简短描述这张图片或图表的核心内容。只输出描述文本本身，不要任何前缀说明。"

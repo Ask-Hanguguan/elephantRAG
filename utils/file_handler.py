@@ -4,6 +4,7 @@ import tempfile
 from typing import Optional
 from utils.logger_handler import logger
 from langchain_core.documents import Document
+from utils.config_handler import rag_conf
 
 # Docling 回退时每批页数（避免扫描版大 PDF OOM）
 DOCLING_BATCH_PAGES = 10
@@ -219,12 +220,111 @@ def _load_pdf_with_docling_batched(
     return all_docs
 
 
+# ============================================================================
+# PDF 图片识别：DashScope VL 描述图片/图表/插图后注入文档
+# ============================================================================
+
+def _describe_image_with_dashscope_vl(pil_image, prompt="用中文简短描述这张图片或图表的核心内容。只输出描述文本本身，不要任何前缀说明。"):
+    """使用 DashScope 视觉模型描述一张图片
+    """
+    import base64, io
+    try:
+        from dashscope import MultiModalConversation
+        buf = io.BytesIO()
+        pil_image.save(buf, format="PNG")
+        b64_str = base64.b64encode(buf.getvalue()).decode("utf-8")
+        model_name = rag_conf.get("vision", {}).get("model_name", "qwen-vl-max")
+        response = MultiModalConversation.call(model=model_name, messages=[{
+            "role": "user",
+            "content": [
+                {"image": "data:image/png;base64," + b64_str},
+                {"text": prompt},
+            ],
+        }])
+        result = response.output.choices[0].message.content
+        if isinstance(result, list):
+            text = "".join(item.get("text", "") for item in result)
+        else:
+            text = str(result)
+        text = text.strip()
+        return text if text else None
+    except Exception as e:
+        logger.warning("[Vision] 图片描述调用失败: " + str(e))
+        return None
+
+
+def _describe_pdf_images(filepath):
+    """使用 Docling 提取 PDF 中的图片，调用 DashScope VL 生成描述
+    """
+    vision_conf = rag_conf.get("vision", {})
+    if not vision_conf.get("enabled", True):
+        return {}
+    try:
+        converter = _get_docling_converter()
+        result = converter.convert(filepath)
+        doc = result.document
+        figures = doc.figures
+        if isinstance(figures, dict):
+            figures = list(figures.values())
+        if not figures:
+            return {}
+        max_per_page = vision_conf.get("max_images_per_page", 3)
+        prompt = vision_conf.get("prompt", "用中文简短描述这张图片或图表的核心内容。只输出描述文本本身，不要任何前缀说明。")
+        page_descs = {}
+        for fig in figures:
+            if fig.image is None or not fig.prov:
+                continue
+            page_no = fig.prov[0].page_no
+            if page_no in page_descs and len(page_descs[page_no]) >= max_per_page:
+                continue
+            desc = _describe_image_with_dashscope_vl(fig.image, prompt)
+            if desc:
+                page_descs.setdefault(page_no, []).append(desc)
+        total = sum(len(v) for v in page_descs.values())
+        if total:
+            logger.info("[Vision] " + os.path.basename(filepath) + " 已描述 " + str(total) + " 张图片")
+        return page_descs
+    except Exception as e:
+        logger.warning("[Vision] PDF 图片提取失败 [" + os.path.basename(filepath) + "]: " + str(e))
+        return {}
+
+
+def _enhance_with_image_descriptions(filepath, docs):
+    """将 PDF 图片描述注入到 Document 列表中
+    """
+    if not docs or not filepath.lower().endswith(".pdf"):
+        return
+    page_descs = _describe_pdf_images(filepath)
+    if not page_descs:
+        return
+    injected = 0
+    for doc in docs:
+        page = doc.metadata.get("page")
+        if page and page in page_descs:
+            desc_block = "\n\n---\n**" + chr(128247) + " 图片说明**\n" + "\n".join("- " + d for d in page_descs[page])
+            doc.page_content = doc.page_content + desc_block
+            injected = injected + len(page_descs[page])
+    if injected == 0:
+        all_descs = []
+        for page_no in sorted(page_descs.keys()):
+            for desc in page_descs[page_no]:
+                all_descs.append("[第" + str(page_no) + "页] " + desc)
+        if all_descs:
+            NL = "\n"
+            items = [str(i + 1) + ". " + d for i, d in enumerate(all_descs)]
+            desc_block = NL + NL + "---" + NL + "**" + chr(128247) + " 文档图片说明**" + NL + NL.join(items)
+            docs[-1].page_content = docs[-1].page_content + desc_block
+            injected = len(all_descs)
+    if injected:
+        logger.info("[Vision] 已注入 " + str(injected) + " 条图片描述 -> " + os.path.basename(filepath))
+
+
 def docling_loader(filepath: str) -> list[Document]:
     """加载文档为 Document 列表
 
     - PDF: 先用 pypdfium2 提取嵌入文字层（快、轻量）；
            若无文字，回退到 DoclingLoader 分批 OCR（处理扫描版/图片型 PDF）
-    - 其他格式 (docx/pptx/xlsx/html 等): 使用 DoclingLoader
+    - 其他格式 (docx/pptx/xlsx/html 等): 使用 DoclingLoader；\n           无论哪种路径，都会用 DashScope VL 描述图片并注入文档。
 
     :param filepath: 文件绝对路径
     :return: Document 列表
@@ -240,6 +340,8 @@ def docling_loader(filepath: str) -> list[Document]:
             logger.info(
                 f"[加载] {os.path.basename(filepath)} → {len(docs)} 页 (pypdfium2)"
             )
+            # 快速路径也增强图片描述（数字 PDF 也可能有图表）
+            _enhance_with_image_descriptions(filepath, docs)
             return docs
 
         if not docs:
@@ -255,7 +357,9 @@ def docling_loader(filepath: str) -> list[Document]:
                 f"部分嵌入文字({len(docs)}/{total})，回退到 Docling 分批整体 OCR"
             )
 
-        return _load_pdf_with_docling_batched(filepath)
+        docs = _load_pdf_with_docling_batched(filepath)
+        _enhance_with_image_descriptions(filepath, docs)
+        return docs
 
     # 非 PDF：docling
     docs = _docling_load_one(filepath)

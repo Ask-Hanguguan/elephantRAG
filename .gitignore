@@ -23,6 +23,7 @@
 !model/
 !prompts/
 !rag/
+!ui/
 !utils/
 
 # Allow Docker / deployment files
