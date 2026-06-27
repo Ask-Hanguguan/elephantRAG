@@ -1,19 +1,10 @@
-collection_name: agent
-persist_directory: chroma_db
+collection_name: kb_docs
 k: 3
-data_path: data
-md5_hex_store: MD5.db
-allow_knowledge_file_type: ["txt", "pdf", "csv","html","md","docx","xlsx","pptx"]
+allow_knowledge_file_type: ["txt", "pdf", "csv", "html", "md", "docx", "xlsx", "pptx"]
 
-chunk_size: 500
-chunk_overlap: 50
+chunk_size: 200
+chunk_overlap: 30
 separators: ["\n\n", "\n", ".", "!", "?", "。", "！", "？", " ", ""]
-
-# CCH预处理配置（Contextual Chunk Headers）
-cch:
-  enabled: true
-  summary_max_length: 200
-  summary_truncate_chars: 3000
 
 # BM25稀疏检索配置
 bm25:
@@ -24,11 +15,6 @@ bm25:
 # 融合检索配置
 fusion:
   rrf_k: 60
-  final_top_k: 5
-  dense_top_k: 10
-  bm25_top_k: 10
-
-# 段落提取配置（依赖 CCH 开启才能写入 chunk_index 元数据，否则合并无效）
-segment:
-  enabled: false
-
+  final_top_k: 10
+  dense_top_k: 20
+  bm25_top_k: 20

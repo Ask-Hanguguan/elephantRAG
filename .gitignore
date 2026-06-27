@@ -16,15 +16,17 @@
 
 # Allow project directories
 !agent/
+!agent/tools/
 !api/
-!auth/
+!api/routes/
+!chat/
 !config/
+!core/
 !data/
+!kb/
 !model/
 !prompts/
-!rag/
 !ui/
-!utils/
 
 # Allow Docker / deployment files
 !Dockerfile
@@ -59,3 +61,6 @@ Thumbs.db
 
 # Environment secrets
 .env
+
+# Temp cleanup scripts
+_cleanup*

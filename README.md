@@ -1,6 +1,6 @@
-# 📄 企业文档智能检索助手
+# 📄 elephantRAG
 
-企业文档智能问答工具。上传企业内部文档（制度规范、技术文档、项目文档、会议纪要等 PDF、PPT、Word），即可对文档内容进行智能检索和问答，快速获取所需信息。
+elephantRAG工具。上传企业内部文档（制度规范、技术文档、项目文档、会议纪要等 PDF、PPT、Word），即可对文档内容进行智能检索和问答，快速获取所需信息。
 
 ---
 
@@ -150,7 +150,7 @@ docker compose down
 
 | 服务 | 地址 | 说明 |
 |-----|------|------|
-| Streamlit Web | http://localhost:8501 | 企业文档智能助手 Web 界面 |
+| Streamlit Web | http://localhost:8501 | elephantRAG Web 界面 |
 | FastAPI API | http://localhost:8000/docs | REST API 文档（Swagger UI） |
 | 健康检查 | http://localhost:8000/api/v1/health | API 健康检查 |
 

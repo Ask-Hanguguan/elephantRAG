@@ -1,27 +1,41 @@
-﻿# ============================================================
-# 妯″瀷鎻愪緵鍟嗛厤缃?
 # ============================================================
+# 模型提供商配置
+# ============================================================
+# LLM 和 Embedding 可独立配置不同提供商。
+# 提供商: dashscope | ollama | openai
+#
+# 向后兼容: 以下旧格式配置仍然有效
+#   provider / chat_model_name / embedding_model_name / ollama
 
-# 妯″瀷鎻愪緵鍟? dashscope | ollama
-# dashscope: 閫氫箟鍗冮棶浜慉PI(闇€ DASHSCOPE_API_KEY 鐜鍙橀噺)
-# ollama: 鏈湴妯″瀷绉佹湁鍖栭儴缃?闇€鏈湴杩愯 Ollama 鏈嶅姟)
-provider: dashscope
+# ---- LLM 配置 ----
+llm:
+  provider: dashscope          # dashscope | ollama | openai
+  dashscope:
+    model_name: qwen-max
+  ollama:
+    base_url: http://localhost:11434
+    model_name: qwen2.5:7b
+  openai:
+    base_url: https://api.openai.com/v1
+    api_key: ${OPENAI_API_KEY}
+    model_name: gpt-4o
 
-# ---- DashScope (閫氫箟鍗冮棶浜慉PI) ----
-# 椤跺眰閰嶇疆淇濇寔鍚戝悗鍏煎,榛樿涓?DashScope
-chat_model_name: qwen3-max
-embedding_model_name: text-embedding-v1
+# ---- Embedding 配置 ----
+embedding:
+  provider: dashscope          # dashscope | ollama | openai
+  dashscope:
+    model_name: text-embedding-async-v1
+  ollama:
+    base_url: http://localhost:11434
+    model_name: nomic-embed-text
+  openai:
+    base_url: https://api.openai.com/v1
+    api_key: ${OPENAI_API_KEY}
+    model_name: text-embedding-3-small
 
-# ---- Ollama (鏈湴妯″瀷,绉佹湁鍖栭儴缃? ----
-ollama:
-  base_url: http://localhost:11434
-  chat_model_name: qwen2.5:7b
-  embedding_model_name: nomic-embed-text
-
-# ---- 图片视觉描述（PDF图表/插图/扫描件识别） ----
-# 用 DashScope VL 模型描述 PDF 中的图片，注入文档内容中以支持检索
-vision:
+# ---- MinerU 文档解析配置 ----
+mineru:
   enabled: true
-  model_name: qwen-vl-max
-  max_images_per_page: 3
-  prompt: "用中文简短描述这张图片或图表的核心内容。只输出描述文本本身，不要任何前缀说明。"
+  max_pdf_size_mb: 200
+  fallback_to_pypdfium: true
+  fallback_to_vl_ocr: true

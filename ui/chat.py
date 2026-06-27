@@ -1,45 +1,80 @@
 """
 智能问答页面
 ================================================
+通过 ApiClient 与 FastAPI 后端通信，SSE 流式展示对话。
 """
+import json
 import time
 
 import streamlit as st
 
+from ui.api_client import ApiClient
+
 
 def chat_page() -> None:
     """智能问答页面"""
-    st.title("📄 企业文档智能助手")
-    st.caption("上传你的企业文档，轻松检索查询！支持 PDF、PPT、Word、Excel、TXT 等格式")
+    st.title("📄 知识库智能助手")
+    st.caption("选择知识库并上传文档后，即可基于文档内容提问。支持 PDF、Word、Excel、TXT 等格式")
     st.divider()
 
-    # 显示历史消息
-    for message in st.session_state["message"]:
-        st.chat_message(message["role"]).write(message["content"])
+    client = ApiClient()
 
-    # 用户输入
+    # ── 显示消息历史 ──
+    for message in st.session_state["messages"]:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+
+    # ── 用户输入 ──
     prompt = st.chat_input("输入你的查询问题...")
 
     if prompt:
-        st.chat_message("user").write(prompt)
-        st.session_state["message"].append({"role": "user", "content": prompt})
+        kb_name = st.session_state.get("kb_name", "default")
+        session_id = st.session_state.get("session_id")
 
-        response_messages: list[str] = []
-        with st.spinner("正在检索企业文档..."):
-            res_stream = st.session_state["agent"].execute_stream(prompt)
+        # 显示用户消息
+        with st.chat_message("user"):
+            st.markdown(prompt)
 
-            def capture(generator, cache_list):
-                for chunk in generator:
-                    cache_list.append(chunk)
-                    for char in chunk:
-                        time.sleep(0.01)
-                        yield char
+        # 保存到 session_state
+        st.session_state["messages"].append({"role": "user", "content": prompt})
 
-            st.chat_message("assistant").write_stream(
-                capture(res_stream, response_messages)
-            )
-            full_response = "".join(response_messages) if response_messages else ""
-            st.session_state["message"].append(
-                {"role": "assistant", "content": full_response}
-            )
-            st.rerun()
+        # 流式获取助手回复
+        with st.chat_message("assistant"):
+            response_placeholder = st.empty()
+            full_response = ""
+            new_session_id = None
+
+            try:
+                for event_type, data in client.chat_stream(prompt, kb_name, session_id):
+                    if event_type == "token":
+                        full_response += data["token"]
+                        response_placeholder.markdown(full_response + "▌")
+                    elif event_type == "metadata":
+                        new_session_id = data["metadata"]["session_id"]
+                    elif event_type == "done":
+                        pass
+                    elif event_type == "error":
+                        st.error(f"请求出错: {data.get('error', '未知错误')}")
+
+                response_placeholder.markdown(full_response)
+
+                # 更新 session_id
+                if new_session_id:
+                    st.session_state["session_id"] = new_session_id
+
+                # 保存到历史
+                if full_response:
+                    st.session_state["messages"].append({
+                        "role": "assistant",
+                        "content": full_response,
+                    })
+
+                # 刷新会话列表
+                st.rerun()
+
+            except Exception as e:
+                st.error(f"对话请求失败: {e}")
+                st.session_state["messages"].append({
+                    "role": "assistant",
+                    "content": f"抱歉，请求失败: {str(e)}",
+                })

@@ -1,23 +1,41 @@
 # Docker 构建忽略文件
+# 保留项目根目录干净，避免将本地无关文件带入镜像
+
+# ---- Python ----
 __pycache__
 *.pyc
 *.pyo
 *.pyd
-.git
-.gitignore
-.github
-.trae
-logs
-chroma_db
-data
-*.db
-*.db-journal
-*.md
-.env
-.venv
-venv
-env
 *.egg-info
 dist
 build
 .pytest_cache
+
+# ---- 本地开发环境 ----
+.venv
+venv
+env
+.idea
+.claude
+
+# ---- 运行时数据（持久化用 volumes，不入镜像） ----
+data
+logs
+chroma_db
+*.db
+*.db-journal
+
+# ---- MinerU 模型（通过 volume 挂载，不入镜像） ----
+models/mineru
+*.pth
+*.onnx
+
+# ---- 敏感信息 ----
+.env
+
+# ---- 文档/杂项 ----
+*.md
+.git
+.gitignore
+.github
+.trae
