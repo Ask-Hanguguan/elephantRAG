@@ -99,10 +99,18 @@ def download_document(kb_name: str, doc_id: int):
     mgr = _ensure_kb()
     try:
         file_bytes, filename = mgr.download_document(doc_id, kb_name)
+        # RFC 5987: 文件名含中文时必须 URL-encode，否则 Starlette 的 latin-1 编码会炸
+        from urllib.parse import quote
+
+        encoded_filename = quote(filename, safe="")
         return StreamingResponse(
             iter([file_bytes]),
             media_type="application/octet-stream",
-            headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+            headers={
+                "Content-Disposition": (
+                    f"attachment; filename*=UTF-8''{encoded_filename}"
+                ),
+            },
         )
     except FileNotFoundError as e:
         raise HTTPException(status_code=404, detail=str(e))
@@ -136,4 +144,46 @@ def revectorize_document(kb_name: str, doc_id: int):
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         logger.exception("重新向量化失败")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/{kb_name}/sync")
+def sync_content(kb_name: str):
+    """Scan content/ for files missing from info.db and register/vectorize them.
+
+    Use this when:
+    - Upload succeeded (file on disk) but DB record is missing
+    - Files were dropped directly into the content directory
+    """
+    mgr = _ensure_kb()
+    if not mgr.kb_exists(kb_name):
+        raise HTTPException(
+            status_code=404,
+            detail=f"知识库 '{kb_name}' 不存在",
+        )
+    try:
+        result = mgr.sync_content(kb_name)
+        return {"message": "同步完成", "result": result}
+    except Exception as e:
+        logger.exception("同步失败")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/{kb_name}/rebuild-bm25")
+def rebuild_bm25(kb_name: str):
+    """Force rebuild BM25 index for all chunks in this KB.
+
+    Call this when:
+    - BM25 search results seem stale or incorrect
+    - After bulk document import
+    - After vector store corruption recovery
+    """
+    mgr = _ensure_kb()
+    if not mgr.kb_exists(kb_name):
+        raise HTTPException(status_code=404, detail=f"知识库 '{kb_name}' 不存在")
+    try:
+        result = mgr.rebuild_bm25(kb_name)
+        return {"message": "BM25 索引重建完成", "result": result}
+    except Exception as e:
+        logger.exception("BM25 重建失败")
         raise HTTPException(status_code=500, detail=str(e))

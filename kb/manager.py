@@ -222,7 +222,8 @@ class KBManager:
             from kb.vector_store import VectorStoreService  # lazy import
 
             kb_path = self.get_kb_path(name)
-            self._vector_stores[name] = VectorStoreService(kb_path)
+            kb_store = self._ensure_store(name)
+            self._vector_stores[name] = VectorStoreService(kb_path, kb_store=kb_store)
         return self._vector_stores[name]
 
     def get_store(self, name: Optional[str] = None) -> KBStore:
@@ -246,6 +247,20 @@ class KBManager:
     def get_retriever(self, name: Optional[str] = None):
         """Shortcut: get fusion retriever for the given (or current) KB."""
         return self.get_vector_store(name).get_fusion_retriever()
+
+    def rebuild_bm25(self, name: Optional[str] = None) -> dict[str, Any]:
+        """Force rebuild BM25 index for the given (or current) KB.
+
+        Useful after bulk import or when search results seem stale.
+        """
+        name = name or self.get_current_kb_name()
+        if name is None:
+            raise ValueError("No knowledge base specified and none is currently active")
+        vs = self._ensure_vector_store(name)
+        vs.rebuild_bm25()
+        chunk_count = vs.get_chunk_count()
+        logger.info(f"[KB] BM25 rebuilt for '{name}': {chunk_count} chunks indexed")
+        return {"kb_name": name, "chunks_indexed": chunk_count}
 
     # ------------------------------------------------------------------
     # document operations (delegate to current / named KB)
@@ -273,6 +288,8 @@ class KBManager:
                 "No knowledge base specified and none is currently active"
             )
 
+        logger.info(f"[upload] KB={name}, file={filename}")
+
         store = self.get_store(name)
         kb_path = self.get_kb_path(name)
         content_dir = os.path.join(kb_path, "content")
@@ -280,40 +297,145 @@ class KBManager:
 
         dest_path = os.path.join(content_dir, filename)
 
-        # Write file bytes
-        raw = file_obj.read() if hasattr(file_obj, "read") else file_obj
-        with open(dest_path, "wb") as f:
-            f.write(raw)
+        # ── Step 1: write file ──
+        try:
+            raw = file_obj.read() if hasattr(file_obj, "read") else file_obj
+            with open(dest_path, "wb") as f:
+                f.write(raw)
+            logger.info(f"[upload] file written: {dest_path}")
+        except Exception as e:
+            logger.exception(f"[upload] write file failed: {dest_path}")
+            raise
 
-        md5_hex = _get_file_md5_hex(dest_path)
-        file_size = os.path.getsize(dest_path)
-        _, ext = os.path.splitext(filename)
+        # ── Step 2: MD5 ──
+        try:
+            md5_hex = _get_file_md5_hex(dest_path)
+            file_size = os.path.getsize(dest_path)
+            _, ext = os.path.splitext(filename)
+            logger.info(f"[upload] md5={md5_hex[:12]}..., size={file_size}")
+        except Exception as e:
+            logger.exception(f"[upload] md5/size failed: {dest_path}")
+            raise
 
-        doc_id = store.add_document(
-            file_name=filename,
-            file_path=dest_path,
-            md5=md5_hex,
-            file_size=file_size,
-            file_type=ext.lstrip(".").lower(),
-        )
+        # ── Step 3: register in KBStore ──
+        try:
+            doc_id = store.add_document(
+                file_name=filename,
+                file_path=dest_path,
+                md5=md5_hex,
+                file_size=file_size,
+                file_type=ext.lstrip(".").lower(),
+            )
+            logger.info(f"[upload] doc_id={doc_id} inserted into info.db")
+        except Exception as e:
+            logger.exception(f"[upload] add_document failed for {filename}")
+            raise
 
-        # Auto-vectorize
+        # ── Step 4: auto-vectorize ──
         try:
             vs = self._ensure_vector_store(name)
-            vs.load_single_document(dest_path)
-            store.update_status(doc_id, "vectorized")
-            logger.info(
-                f"Document '{filename}' (id={doc_id}) uploaded and "
-                f"vectorized in KB '{name}'"
-            )
+            ok, chunk_count = vs.process_and_store(dest_path, md5_hex)
+            if ok:
+                store.update_status(doc_id, "vectorized", chunk_count=chunk_count)
+                logger.info(
+                    f"[upload] '{filename}' (id={doc_id}) → {chunk_count} chunks"
+                )
+            else:
+                logger.warning(
+                    f"[upload] '{filename}' (id={doc_id}) vectorization returned no content"
+                )
         except Exception as exc:
             logger.warning(
-                f"Document '{filename}' uploaded but auto-vectorize "
-                f"failed (id={doc_id}): {exc}"
+                f"[upload] '{filename}' (id={doc_id}) vectorization failed: {exc}",
+                exc_info=True,
             )
 
+        # ── verify ──
         result = store.get_document(doc_id)
+        logger.info(f"[upload] done: {result}")
         return result if result is not None else {}
+
+    # ------------------------------------------------------------------
+    # content sync — repair missing DB records from content/ files
+    # ------------------------------------------------------------------
+
+    def sync_content(self, kb_name: Optional[str] = None) -> dict[str, Any]:
+        """Scan content/ for files missing from info.db and register them.
+
+        Useful for:
+        - Repairing partial uploads (file on disk but no DB record)
+        - Importing files dropped directly into content/
+        - Recovery after DB corruption
+
+        Returns:
+            {"added": [...filenames], "skipped": [...filenames], "errors": [...]}
+        """
+        name = kb_name or self.get_current_kb_name()
+        if name is None:
+            raise ValueError("No knowledge base specified and none is currently active")
+
+        store = self.get_store(name)
+        kb_path = self.get_kb_path(name)
+        content_dir = os.path.join(kb_path, "content")
+
+        if not os.path.isdir(content_dir):
+            return {"added": [], "skipped": [], "errors": []}
+
+        # Build set of registered file_paths
+        registered_paths = {doc["file_path"] for doc in store.list_documents()}
+
+        added: list[str] = []
+        skipped: list[str] = []
+        errors: list[str] = []
+
+        for fname in os.listdir(content_dir):
+            fpath = os.path.join(content_dir, fname)
+            if not os.path.isfile(fpath):
+                continue
+
+            # Normalize path for comparison (Windows backslash → forward)
+            norm_path = os.path.normpath(fpath).replace("\\", "/")
+            registered_norm = {rp.replace("\\", "/") for rp in registered_paths}
+
+            if norm_path in registered_norm or fpath in registered_paths:
+                skipped.append(fname)
+                continue
+
+            # Register missing file
+            try:
+                md5_hex = _get_file_md5_hex(fpath)
+                file_size = os.path.getsize(fpath)
+                _, ext = os.path.splitext(fname)
+
+                doc_id = store.add_document(
+                    file_name=fname,
+                    file_path=fpath,
+                    md5=md5_hex,
+                    file_size=file_size,
+                    file_type=ext.lstrip(".").lower(),
+                )
+                logger.info(f"[sync] registered '{fname}' as doc_id={doc_id}")
+
+                # Auto-vectorize
+                try:
+                    vs = self._ensure_vector_store(name)
+                    ok, chunk_count = vs.process_and_store(fpath, md5_hex)
+                    if ok:
+                        store.update_status(doc_id, "vectorized", chunk_count=chunk_count)
+                        logger.info(f"[sync] '{fname}' → {chunk_count} chunks")
+                except Exception as exc:
+                    logger.warning(f"[sync] vectorize '{fname}' failed: {exc}")
+
+                added.append(fname)
+            except Exception as exc:
+                logger.error(f"[sync] failed to register '{fname}': {exc}")
+                errors.append(f"{fname}: {exc}")
+
+        logger.info(
+            f"[sync] KB='{name}': added={len(added)}, "
+            f"skipped={len(skipped)}, errors={len(errors)}"
+        )
+        return {"added": added, "skipped": skipped, "errors": errors}
 
     def list_documents(
         self,
@@ -447,10 +569,10 @@ class KBManager:
         # --- load + chunk ---
         try:
             from langchain_text_splitters import RecursiveCharacterTextSplitter
-            from utils.config_handler import chroma_conf
-            from utils.file_handler import docling_loader
+            from core.config import chroma_conf
+            from kb.loader import load_document
 
-            documents = docling_loader(file_path)
+            documents = load_document(file_path)
             if not documents:
                 logger.warning(f"No content loaded from '{file_path}'")
                 return False

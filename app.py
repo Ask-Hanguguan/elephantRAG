@@ -9,6 +9,7 @@ from ui.session import init_session_state
 from ui.chat import chat_page
 from ui.knowledge import knowledge_page
 from ui.sidebar import sidebar
+from ui.styles import inject_global_css
 
 
 def main() -> None:
@@ -21,6 +22,9 @@ def main() -> None:
     )
 
     init_session_state()
+
+    # 全局 CSS（仅注入一次）
+    inject_global_css()
 
     # 侧边栏（知识库选择器 + 会话列表）
     sidebar()

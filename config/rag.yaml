@@ -24,7 +24,7 @@ llm:
 embedding:
   provider: dashscope          # dashscope | ollama | openai
   dashscope:
-    model_name: text-embedding-async-v1
+    model_name: text-embedding-v1
   ollama:
     base_url: http://localhost:11434
     model_name: nomic-embed-text

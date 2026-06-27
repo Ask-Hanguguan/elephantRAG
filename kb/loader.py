@@ -1,15 +1,20 @@
 """
-文档加载管线 — 文件 MD5 / 文档解析 / 切片
-
-Port of utils/file_handler.py into kb/ module.
+文档加载管线 — MD5 / 格式分发 / PDF 解析 (PyMuPDF + PaddleOCR) / 文本规范化
 """
 
 import os
+import re
 import hashlib
+import unicodedata
 from typing import Optional
 
 from core.logger import logger
 from langchain_core.documents import Document
+
+
+# ============================================================================
+# MD5
+# ============================================================================
 
 
 def get_file_md5_hex(file_path: str) -> Optional[str]:
@@ -70,256 +75,248 @@ def listdir_with_allowed_type(directory: str, allowed_exts: tuple) -> list[str]:
 
 
 # ============================================================================
-# PDF 图片渲染 & DashScope VL
+# 文本规范化
 # ============================================================================
 
 
-def _split_pdf_to_images(file_path: str) -> list[bytes]:
-    """使用 pypdfium2 将 PDF 每页渲染为 PNG 图片字节
+def _normalize_text(text: str) -> str:
+    """文本规范化 — 去乱码/控制字符、全半角转换、空白合并
 
-    Args:
-        file_path: PDF 文件路径
-
-    Returns:
-        PNG 字节列表，每页一张
+    处理步骤:
+    1. Unicode NFKC 规范化（全角→半角、合字分解等）
+    2. 移除控制字符（保留换行符）
+    3. 合并连续空行（≥3 → 2）
+    4. 合并行内连续空白
     """
-    try:
-        import pypdfium2 as pdfium
-    except ImportError:
-        logger.error("[Loader] pypdfium2 未安装，无法渲染 PDF")
-        return []
+    text = text.strip()
+    if not text:
+        return text
 
-    try:
-        pdf = pdfium.PdfDocument(file_path)
-    except Exception as e:
-        logger.error(f"[Loader] pypdfium2 打开 PDF 失败 [{file_path}]: {e}")
-        return []
+    # 1. Unicode 规范化
+    text = unicodedata.normalize("NFKC", text)
 
-    total = len(pdf)
-    images: list[bytes] = []
+    # 2. 移除控制字符（保留 \n \r \t）
+    text = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]", "", text)
 
-    for i in range(total):
-        try:
-            page = pdf[i]
-            bitmap = page.render(scale=2)  # 2x 提高 OCR 准确率
-            pil_image = bitmap.to_pil()
-            import io
+    # 3. 合并连续空行
+    text = re.sub(r"\n{3,}", "\n\n", text)
 
-            buf = io.BytesIO()
-            pil_image.save(buf, format="PNG")
-            images.append(buf.getvalue())
-        except Exception as e:
-            logger.warning(f"[Loader] 渲染第 {i + 1} 页失败: {e}")
+    # 4. 合并行内连续空白（保留单个空格）
+    text = re.sub(r"[ \t]+", " ", text)
 
-    pdf.close()
-    logger.info(f"[Loader] PDF 共 {total} 页，成功渲染 {len(images)} 页图片")
-    return images
+    # 5. 清理行首尾空白
+    lines = [line.strip() for line in text.split("\n")]
+    # 移除首尾空白行
+    while lines and not lines[0]:
+        lines.pop(0)
+    while lines and not lines[-1]:
+        lines.pop()
+
+    return "\n".join(lines)
 
 
-def _describe_image_with_dashscope_vl(file_path: str) -> str:
-    """使用 DashScope qwen-vl-max 逐页描述 PDF 页面内容
+# ============================================================================
+# PaddleOCR 单例
+# ============================================================================
 
-    Args:
-        file_path: PDF 文件路径
+_ocr_instance = None
 
-    Returns:
-        所有页面的描述文本拼接
+
+def _get_paddle_ocr():
+    """PaddleOCR 延迟初始化单例（中英文混合，CPU 模式）
+
+    兼容 PaddleOCR 2.x 和 3.x：
+    - 2.x: ``show_log=False`` 抑制日志
+    - 3.x: ``show_log`` 已移除，通过环境变量 / logging 控制
     """
-    from openai import OpenAI
-    import base64
+    global _ocr_instance
+    if _ocr_instance is None:
+        import logging
+        logging.getLogger("paddleocr").setLevel(logging.WARNING)
 
-    api_key = os.getenv("DASHSCOPE_API_KEY")
-    if not api_key:
-        logger.warning("[Loader] DASHSCOPE_API_KEY 未设置，跳过 VL OCR")
-        return ""
-
-    client = OpenAI(
-        api_key=api_key,
-        base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
-    )
-
-    images = _split_pdf_to_images(file_path)
-    if not images:
-        return ""
-
-    descriptions: list[str] = []
-    for i, img_bytes in enumerate(images):
         try:
-            b64 = base64.b64encode(img_bytes).decode("utf-8")
-            resp = client.chat.completions.create(
-                model="qwen-vl-max",
-                messages=[
-                    {
-                        "role": "user",
-                        "content": [
-                            {
-                                "type": "image_url",
-                                "image_url": f"data:image/png;base64,{b64}",
-                            },
-                            {
-                                "type": "text",
-                                "text": "请详细描述这张图片中的文字内容。",
-                            },
-                        ],
-                    }
-                ],
-                timeout=30,
+            from paddleocr import PaddleOCR
+
+            # 尝试 3.x 构造（无 show_log 参数）
+            _ocr_instance = PaddleOCR(
+                lang="ch",
+                use_angle_cls=True,
             )
-            text = resp.choices[0].message.content
-            descriptions.append(text or "")
-        except Exception as e:
-            logger.warning(f"[Loader] VL OCR 第 {i + 1} 页失败: {e}")
+        except TypeError:
+            # 回退 2.x 构造
+            from paddleocr import PaddleOCR
 
-    return "\n".join(descriptions)
+            _ocr_instance = PaddleOCR(
+                lang="ch",
+                use_angle_cls=True,
+                show_log=False,
+            )
+
+        logger.info("[Loader] PaddleOCR 初始化完成")
+    return _ocr_instance
+
+
+def _extract_ocr_texts(ocr_result) -> list[str]:
+    """从 PaddleOCR 3.x OCRResult 或 2.x 嵌套列表提取文本
+
+    3.x: ``OCRResult.rec_texts`` (list[str])  或 dict-like 访问
+    2.x: ``[[[bbox, (text, score)], ...], ...]``
+
+    Returns:
+        文本列表
+    """
+    texts: list[str] = []
+
+    if not ocr_result:
+        return texts
+
+    # 3.x 格式：list[OCRResult]
+    for res in ocr_result:
+        if res is None:
+            continue
+
+        # 3.x 对象格式
+        if hasattr(res, "rec_texts"):
+            texts.extend(t for t in res.rec_texts if t and t.strip())
+        elif hasattr(res, "texts"):
+            texts.extend(t for t in res.texts if t and t.strip())
+        elif isinstance(res, dict):
+            # 3.x dict 格式
+            rec_texts = res.get("rec_texts", [])
+            texts.extend(t for t in rec_texts if t and t.strip())
+        elif isinstance(res, (list, tuple)):
+            # 2.x 嵌套列表格式
+            for line_info in res:
+                if isinstance(line_info, (list, tuple)) and len(line_info) >= 2:
+                    text = line_info[1]
+                    if isinstance(text, (list, tuple)):
+                        text = text[0]
+                    if text and str(text).strip():
+                        texts.append(str(text).strip())
+
+    return texts
 
 
 # ============================================================================
-# PDF 加载（pypdfium2 → Docling OCR → DashScope VL）
+# PDF 加载：PyMuPDF 文字提取 + 嵌入图片 PaddleOCR 双路互补
 # ============================================================================
 
 
 def _load_pdf(file_path: str) -> list[Document]:
-    """加载 PDF 文档，带三级 fallback
+    """加载 PDF — PyMuPDF 逐页提取嵌入文字 + PaddleOCR 识别嵌入图片
 
-    1. pypdfium2 逐页提取嵌入文字
-    2. 空白页回退 Docling OCR（扫描版）
-    3. 仍失败则使用 DashScope VL 描述
+    处理流程（每页）::
+
+        1. PyMuPDF ``page.get_text("")`` 提取嵌入文字层
+        2. ``page.get_image_info(xrefs=True)`` 获取页面内嵌图片
+        3. 过滤装饰性小图（宽高均 < 页面 60%）
+        4. 对达标图片调用 PaddleOCR 识别
+        5. 合并文字 + OCR 结果 → 文本规范化
+
+    相比「整页渲染→OCR」方案，此方法:
+    - 嵌入文字页不触发 OCR（保持原始精度 + 快速）
+    - 仅对嵌入图片进行 OCR 补充扫描/图表文字
+    - 一张图片一次 OCR，像素利用率高
 
     Args:
-        file_path: PDF 文件路径
+        file_path: PDF 文件绝对路径
 
     Returns:
-        Document 列表
+        Document 列表（每页一个 Document）
     """
-    import pypdfium2 as pdfium
+    import fitz  # PyMuPDF
+    import numpy as np
 
     pdf_name = os.path.basename(file_path)
     docs: list[Document] = []
-    total_pages = 0
 
-    # ------ 第一步：pypdfium2 逐页提取嵌入文字 ------
     try:
-        pdf = pdfium.PdfDocument(file_path)
-        total_pages = len(pdf)
-
-        for i in range(total_pages):
-            try:
-                page = pdf[i]
-                textpage = page.get_textpage()
-                text = textpage.get_text_range().strip()
-                if text:
-                    docs.append(
-                        Document(
-                            page_content=text,
-                            metadata={"source": file_path, "page": i + 1},
-                        )
-                    )
-                else:
-                    docs.append(None)  # type: ignore[arg-type]  # 占位，后续 fallback
-            except Exception:
-                docs.append(None)  # type: ignore[arg-type]
-
-        pdf.close()
+        doc = fitz.open(file_path)
     except Exception as e:
-        logger.error(f"[Loader] pypdfium2 打开失败 [{pdf_name}]: {e}")
+        logger.error(f"[Loader] PyMuPDF 打开失败 [{pdf_name}]: {e}")
         return []
 
-    pages_with_text = sum(1 for d in docs if d is not None)
-    blank_indices = [i for i, d in enumerate(docs) if d is None]
+    ocr = _get_paddle_ocr()
 
-    if not blank_indices:
-        # 所有页都有文字
-        logger.info(f"[Loader] {pdf_name} → {total_pages} 页 (pypdfium2)")
-        return [d for d in docs if d is not None]  # type: ignore[return-value]
+    for page_num in range(len(doc)):
+        page = doc[page_num]
+        page_rect = page.rect
+        texts: list[str] = []
 
-    logger.info(
-        f"[Loader] {pdf_name} → {pages_with_text}/{total_pages} 页有文字, "
-        f"{len(blank_indices)} 页需 fallback"
-    )
+        # ── 第一步：提取嵌入文字层 ──
+        # "text" 模式返回页面已有的文字（包括格式控制字符）
+        embedded_text = page.get_text("text")
+        if embedded_text.strip():
+            texts.append(embedded_text)
 
-    # ------ 第二步：对空白页尝试 Docling OCR ------
-    try:
-        from docling.document_converter import DocumentConverter
+        # ── 第二步：获取嵌入图片列表 ──
+        img_list = page.get_image_info(xrefs=True)
 
-        converter = DocumentConverter()
-        result = converter.convert(file_path)
-        docling_doc = result.document
-        docling_text = docling_doc.export_to_markdown() if hasattr(docling_doc, "export_to_markdown") else str(docling_doc)
+        # ── 第三步：对每张图片判断是否调用 OCR ──
+        for img in img_list:
+            xref = img.get("xref")
+            if not xref:
+                continue
 
-        if docling_text and len(docling_text.strip()) > 50:
-            # Docling 有实质内容，用它替换空白页
-            # 按段落/页拆分 docling 文本（Docling 输出含分页标记）
-            paragraphs = docling_text.split("\n\n")
-            docling_idx = 0
-            for idx in blank_indices:
-                if docling_idx < len(paragraphs):
-                    docs[idx] = Document(
-                        page_content=paragraphs[docling_idx].strip(),
-                        metadata={"source": file_path, "page": idx + 1},
-                    )
-                    docling_idx += 1
-                else:
-                    break
+            bbox = img["bbox"]
+            img_w = bbox[2] - bbox[0]
+            img_h = bbox[3] - bbox[1]
 
-            # 重新检查还有哪些空白页
-            remaining_blank = [i for i, d in enumerate(docs) if d is None]
-            if not remaining_blank:
-                logger.info(f"[Loader] {pdf_name} → pypdfium2 + Docling 完成")
-                return [d for d in docs if d is not None]  # type: ignore[return-value]
+            # 过滤装饰性小图（icon / logo / 分割线等）
+            # 宽 AND 高均小于页面 60% → 跳过
+            page_w_ratio = img_w / page_rect.width if page_rect.width > 0 else 0
+            page_h_ratio = img_h / page_rect.height if page_rect.height > 0 else 0
+            if page_w_ratio < 0.6 and page_h_ratio < 0.6:
+                continue
 
-            logger.info(
-                f"[Loader] {pdf_name} → Docling 覆盖了 {len(blank_indices) - len(remaining_blank)} 页, "
-                f"仍有 {len(remaining_blank)} 页空白"
-            )
-            blank_indices = remaining_blank
-        else:
-            logger.info(f"[Loader] {pdf_name} → Docling 未产出实质内容")
-    except Exception as e:
-        logger.warning(f"[Loader] Docling OCR 失败 [{pdf_name}]: {e}")
+            # ── 第四步：提取像素 → PaddleOCR ──
+            try:
+                pix = fitz.Pixmap(doc, xref)
 
-    # ------ 第三步：仍空白页使用 DashScope VL ------
-    remaining_blank = [i for i, d in enumerate(docs) if d is None]
-    if remaining_blank:
-        logger.info(f"[Loader] {pdf_name} → 尝试 DashScope VL 描述 {len(remaining_blank)} 页")
-        vl_text = _describe_image_with_dashscope_vl(file_path)
-        if vl_text and len(vl_text.strip()) > 20:
-            segments = vl_text.split("\n")
-            if len(segments) >= len(remaining_blank):
-                for j, idx in enumerate(remaining_blank):
-                    docs[idx] = Document(
-                        page_content=segments[j].strip(),
-                        metadata={"source": file_path, "page": idx + 1},
-                    )
-            else:
-                # VL 输出页数不足，合并注入最后一页
-                for idx in remaining_blank:
-                    docs[idx] = Document(
-                        page_content=vl_text,
-                        metadata={"source": file_path, "page": idx + 1},
-                    )
+                # PyMuPDF Pixmap: h × w × n (n 为通道数)
+                samples = np.frombuffer(pix.samples, dtype=np.uint8)
 
-    # 清理剩余 None，回退为空文档
-    final_docs: list[Document] = []
-    for d in docs:
-        if d is None:
-            final_docs.append(
+                if pix.n < 4:  # 灰度 (1) 或 RGB (3)
+                    img_array = samples.reshape(pix.h, pix.w, pix.n)
+                    if pix.n == 1:
+                        # 灰度 → 复制为 3 通道
+                        img_array = np.stack([img_array] * 3, axis=-1)
+                else:  # CMYK (4) 或带 alpha
+                    img_array = samples.reshape(pix.h, pix.w, pix.n)
+                    if img_array.shape[2] == 4:
+                        # RGBA / CMYK → 取前 3 通道
+                        img_array = img_array[:, :, :3]
+
+                # PaddleOCR: uint8 [H, W, 3] RGB → OCRResult (3.x) 或 list (2.x)
+                ocr_result = ocr.ocr(img_array)
+                ocr_lines = _extract_ocr_texts(ocr_result)
+                if ocr_lines:
+                    texts.append("\n".join(ocr_lines))
+
+            except Exception as e:
+                logger.warning(
+                    f"[Loader] PaddleOCR 图片识别失败 "
+                    f"({pdf_name} 第 {page_num + 1} 页, xref={xref}): {e}"
+                )
+
+        # ── 合并所有文本 → 规范化 ──
+        page_text = _normalize_text("\n".join(texts))
+
+        if page_text:
+            docs.append(
                 Document(
-                    page_content="",
-                    metadata={"source": file_path, "page": docs.index(None) + 1},
+                    page_content=page_text,
+                    metadata={"source": file_path, "page": page_num + 1},
                 )
             )
-        else:
-            final_docs.append(d)
 
-    logger.info(
-        f"[Loader] {pdf_name} → {len(final_docs)} 页 "
-        f"(pypdfium2 + Docling + VL fallback)"
-    )
-    return final_docs
+    doc.close()
+    logger.info(f"[Loader] {pdf_name} → {len(docs)} 页 (PyMuPDF + PaddleOCR)")
+    return docs
 
 
 # ============================================================================
-# 非 PDF 文档加载
+# 非 PDF 文档加载（与旧版一致）
 # ============================================================================
 
 
@@ -396,13 +393,10 @@ def _load_other(file_path: str) -> list[Document]:
 # ============================================================================
 
 
-def docling_loader(file_path: str) -> list[Document]:
+def load_document(file_path: str) -> list[Document]:
     """加载文档为 Document 列表
 
-    - PDF: 三级 fallback 链 —
-        1. pypdfium2 逐页提取嵌入文字
-        2. 空白页回退 Docling OCR
-        3. 仍失败则使用 DashScope VL 描述
+    - PDF: PyMuPDF 嵌入文字 + PaddleOCR 嵌入图片 → 合并且规范化
     - 其他格式: 按扩展名分发到对应的 langchain_community loader
 
     Args:
@@ -421,3 +415,7 @@ def docling_loader(file_path: str) -> list[Document]:
         return _load_pdf(file_path)
     else:
         return _load_other(file_path)
+
+
+# 向后兼容别名
+docling_loader = load_document

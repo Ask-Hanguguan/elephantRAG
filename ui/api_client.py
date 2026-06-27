@@ -84,7 +84,14 @@ class ApiClient:
         resp.raise_for_status()
         disposition = resp.headers.get("content-disposition", "")
         filename = "unknown"
-        if "filename=" in disposition:
+        # RFC 5987: filename*=UTF-8''xxx 优先，fallback 到 filename=xxx
+        if "filename*=" in disposition:
+            from urllib.parse import unquote
+            import re
+            match = re.search(r"filename\*=UTF-8''(.+)", disposition)
+            if match:
+                filename = unquote(match.group(1))
+        elif "filename=" in disposition:
             filename = disposition.split("filename=")[-1].strip('"')
         return resp.content, filename
 
@@ -101,6 +108,24 @@ class ApiClient:
         """重新向量化"""
         resp = httpx.post(
             f"{self.base_url}/api/kb/{kb_name}/documents/{doc_id}/revectorize",
+            timeout=120,
+        )
+        resp.raise_for_status()
+        return resp.json()
+
+    def rebuild_bm25(self, kb_name: str) -> dict:
+        """重建 BM25 索引"""
+        resp = httpx.post(
+            f"{self.base_url}/api/kb/{kb_name}/rebuild-bm25",
+            timeout=60,
+        )
+        resp.raise_for_status()
+        return resp.json()
+
+    def sync_content(self, kb_name: str) -> dict:
+        """扫描 content/ 补登记遗漏文件"""
+        resp = httpx.post(
+            f"{self.base_url}/api/kb/{kb_name}/sync",
             timeout=120,
         )
         resp.raise_for_status()

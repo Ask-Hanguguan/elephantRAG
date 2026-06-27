@@ -84,15 +84,52 @@ class DashScopeLLMProvider(LLMProvider):
 
 
 class DashScopeEmbeddingProvider(EmbeddingProvider):
-    """DashScope 通义千问嵌入模型"""
+    """DashScope 通义千问嵌入模型
+
+    直接使用 dashscope SDK 原生 TextEmbedding API，
+    兼容 OpenAI 格式和 DashScope 兼容接口都存在字段名不匹配问题。
+    """
 
     def create_embedding(self):
-        from langchain_community.embeddings import DashScopeEmbeddings
+        import os
+        from typing import List
+        from langchain_core.embeddings import Embeddings
 
+        api_key = os.getenv("DASHSCOPE_API_KEY", "")
         cfg = _get_embedding_config()
-        model_name = cfg.get("dashscope", {}).get("model_name") or cfg.get("embedding_model_name", "text-embedding-async-v1")
-        logger.info(f"[provider] 创建 DashScope Embedding: {model_name}")
-        return DashScopeEmbeddings(model=model_name)
+        model_name = cfg.get("dashscope", {}).get("model_name") or cfg.get(
+            "embedding_model_name", "text-embedding-v1"
+        )
+
+        class _DashScopeEmbeddings(Embeddings):
+            """LangChain Embeddings 协议的 dashscope SDK 适配器"""
+
+            def embed_documents(self, texts: List[str]) -> List[List[float]]:
+                import dashscope
+
+                result = []
+                for text in texts:
+                    resp = dashscope.TextEmbedding.call(
+                        model=model_name,
+                        input=text,
+                        api_key=api_key,
+                    )
+                    if resp.status_code == 200:
+                        result.append(
+                            resp.output["embeddings"][0]["embedding"]
+                        )
+                    else:
+                        raise RuntimeError(
+                            f"DashScope embedding failed: "
+                            f"code={resp.status_code} message={resp.message}"
+                        )
+                return result
+
+            def embed_query(self, text: str) -> List[float]:
+                return self.embed_documents([text])[0]
+
+        logger.info(f"[provider] 创建 DashScope Embedding (原生 SDK): {model_name}")
+        return _DashScopeEmbeddings()
 
 
 # ============================================================

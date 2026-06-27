@@ -20,14 +20,16 @@ langchain-chroma>=0.2.0
 langgraph>=0.2.0
 langchain-openai>=0.3.0
 
-# ---- DashScope SDK ----
+# ---- DashScope SDK (LLM) ----
 dashscope>=1.20.0
 
-# ---- MinerU 文档解析（高质量 PDF→Markdown）----
-magic-pdf>=0.8.0
+# ---- PDF 解析：PyMuPDF (高性能文字提取 + 嵌入图片渲染) ----
+PyMuPDF>=1.24.0
 
-# ---- pypdfium2（MinerU 不可用时的快速回退）----
-pypdfium2>=4.30.0
+# ---- OCR：PaddleOCR 3.x (中英文混合识别，CPU 友好) ----
+# PaddlePaddle CPU 版 → PaddleOCR 3.x 会自动依赖
+paddlepaddle==2.6.2
+paddleocr==2.7.3
 
 # ---- BM25 Retrieval ----
 rank-bm25>=0.2.0
@@ -36,11 +38,12 @@ jieba>=0.42.0
 # ---- Data Processing ----
 pandas>=2.0.0
 pydantic>=2.0.0
+numpy==1.26.4
 
 # ---- Utilities ----
 pyyaml>=6.0
 
-# ---- Document format readers（Office 轻量回退）----
+# ---- Document format readers (Office 轻量回退) ----
 python-docx>=1.1.0
 python-pptx>=1.0.0
 openpyxl>=3.1.0

@@ -1,41 +1,49 @@
-# Docker 构建忽略文件
-# 保留项目根目录干净，避免将本地无关文件带入镜像
-
-# ---- Python ----
-__pycache__
+# ── Python 运行时残留 ──
+__pycache__/
 *.pyc
 *.pyo
 *.pyd
-*.egg-info
-dist
-build
-.pytest_cache
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-# ---- 本地开发环境 ----
-.venv
-venv
-env
-.idea
-.claude
+# ── 虚拟环境 ──
+.venv/
+venv/
+env/
 
-# ---- 运行时数据（持久化用 volumes，不入镜像） ----
-data
-logs
-chroma_db
+# ── IDE / 工具 ──
+.idea/
+.vscode/
+.claude/
+.trae/
+
+# ── 运行时数据 (通过 volume 挂载) ──
+data/
+logs/
 *.db
 *.db-journal
+*.db-shm
+*.db-wal
+chroma_db/
 
-# ---- MinerU 模型（通过 volume 挂载，不入镜像） ----
-models/mineru
-*.pth
-*.onnx
-
-# ---- 敏感信息 ----
+# ── 敏感信息 ──
 .env
 
-# ---- 文档/杂项 ----
-*.md
-.git
+# ── Git ──
+.git/
 .gitignore
-.github
-.trae
+.github/
+.gitattributes
+
+# ── 文档 / 杂项 ──
+*.md
+!README.md
+*.bat
+_cleanup*
+
+# ── macOS ──
+.DS_Store

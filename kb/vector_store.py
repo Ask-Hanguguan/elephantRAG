@@ -16,9 +16,11 @@ from model.factory import embed_model
 
 
 class VectorStoreService:
-    def __init__(self, kb_path: str, collection_name: str = "kb_docs"):
+    def __init__(self, kb_path: str, kb_store=None, collection_name: str = "kb_docs"):
         persist_dir = os.path.join(kb_path, "chroma_db")
         os.makedirs(persist_dir, exist_ok=True)
+
+        self.kb_store = kb_store
 
         self.vector_store = Chroma(
             collection_name=collection_name,
@@ -40,9 +42,9 @@ class VectorStoreService:
         处理单个文件：加载 → 切片 → 写入 ChromaDB
         返回 (成功与否, chunk数量)
         """
-        from kb.loader import docling_loader
+        from kb.loader import load_document
 
-        documents = docling_loader(file_path)
+        documents = load_document(file_path)
         if not documents:
             logger.warning(f"[VectorStore] {file_path} 无有效文本内容")
             return False, 0
@@ -97,7 +99,7 @@ class VectorStoreService:
         """获取融合检索器 (BM25 + Dense → RRF) — 延迟初始化 BM25"""
         if self._bm25_index is None:
             from kb.bm25_index import BM25SparseIndex
-            self._bm25_index = BM25SparseIndex(self, config=chroma_conf.get("bm25", {}))
+            self._bm25_index = BM25SparseIndex(self, self.kb_store, config=chroma_conf.get("bm25", {}))
 
         from kb.fusion_retriever import FusionRetriever
         fusion_conf = chroma_conf.get("fusion", {})

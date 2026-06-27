@@ -1,8 +1,9 @@
 """
 全局自定义样式
 ================================================
-提供统一的 CSS 注入函数，供各页面调用
+统一 CSS 注入，避免各页面内嵌冗长样式。
 """
+import streamlit as st
 
 # ============================================================
 # 全局主题 CSS
@@ -79,5 +80,61 @@ header[data-testid="stHeader"] {visibility: hidden;}
     padding: 1rem 1.25rem;
     border: 1px solid var(--border-color);
 }
+
+/* ---- 侧边栏按钮单行截断 ---- */
+[data-testid="stSidebar"] .stButton button {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
+    border-radius: 6px;
+}
+
+/* 侧边栏分行容器紧凑 */
+[data-testid="stSidebar"] .stHorizontalBlock {
+    gap: 0.3rem !important;
+    margin-bottom: 0.2rem;
+}
 </style>
 """
+
+# ============================================================
+# 聊天页欢迎屏
+# ============================================================
+WELCOME_CSS = """
+<style>
+.welcome-center {
+    text-align: center;
+    margin-top: 15vh;
+    margin-bottom: 5vh;
+}
+
+.welcome-center .welcome-icon {
+    font-size: 4rem;
+    margin-bottom: 0;
+}
+
+.welcome-center h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1A202C;
+    margin-bottom: 0.3rem;
+}
+
+.welcome-center p {
+    color: #888;
+    font-size: 1rem;
+}
+</style>
+"""
+
+
+def inject_global_css():
+    """注入全局基础样式（所有页面共享）"""
+    st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
+
+
+def inject_welcome_css():
+    """注入聊天页欢迎屏样式"""
+    st.markdown(WELCOME_CSS, unsafe_allow_html=True)

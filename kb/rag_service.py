@@ -44,7 +44,9 @@ class RagSummarizeService:
             except (FileNotFoundError, ValueError, KeyError):
                 prompt_template = RAG_PROMPT_TEMPLATE
 
-            prompt = prompt_template.format(context=context, question=user_query)
+            prompt = prompt_template.format(
+                context=context, question=user_query, input=user_query
+            )
             response = chat_model.invoke(prompt)
             return response.content
 
