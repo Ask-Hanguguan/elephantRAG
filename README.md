@@ -236,21 +236,9 @@ streamlit run app.py --server.port 8501
 ### 二、Docker 部署
 
 ```bash
-# 1. 配置环境变量
-cp .env.example .env
-# 编辑 .env 填入 DASHSCOPE_API_KEY
-
-# 2. 构建镜像
+cp .env.example .env    # 编辑 .env 填入 DASHSCOPE_API_KEY
 docker build -t elephant-rag .
-
-# 3. 运行
-docker run -d \
-  --name elephant-rag \
-  -p 8000:8000 \
-  -p 8501:8501 \
-  -v $(pwd)/data:/app/data \
-  --env-file .env \
-  elephant-rag
+docker run -d --name elephant-rag -p 8000:8000 -p 8501:8501 -v $(pwd)/data:/app/data --env-file .env elephant-rag
 ```
 
 启动后访问：
