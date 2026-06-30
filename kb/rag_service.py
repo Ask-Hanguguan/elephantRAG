@@ -38,6 +38,18 @@ class RagSummarizeService:
             docs = self.retriever_docs(user_query)
             context = self._format_context(docs)
 
+            # 日志：输出每条召回 chunk 的摘要
+            for i, d in enumerate(docs, 1):
+                text = d.get("text", "")
+                src = d.get("metadata", {}).get("source", "未知")
+                preview = text[:120].replace("\n", " ")
+                logger.info(
+                    f"[RAG]  召回[{i}/{len(docs)}] "
+                    f"score={d.get('score', 0):.3f} "
+                    f"src={src.split(chr(92))[-1].split('/')[-1]} "
+                    f"=> {preview}{'…' if len(text) > 120 else ''}"
+                )
+
             # 尝试从配置加载 prompt 模板
             try:
                 prompt_template = load_prompt("rag")

@@ -4,13 +4,15 @@ ReAct Agent — LLM + 工具调度核心
 支持传入对话历史，通过 KBManager 获取当前知识库上下文。
 """
 
+import uuid
 from typing import Optional
 
 from langchain.agents import create_agent
-from langchain_core.messages import AIMessage
+from langchain_core.messages import AIMessage, ToolMessage
 from agent.tools.agent_tools import kb_retrieve, kb_list_docs
 from model.factory import chat_model
 from core.config import load_prompt
+from core.logger import logger
 
 
 class ReactAgent(object):
@@ -50,10 +52,39 @@ class ReactAgent(object):
 
         input_dict = {"messages": messages}
 
+        # 为每次查询生成一个 trace_id，便于在日志中串联同一请求的完整链路
+        trace_id = uuid.uuid4().hex[:8]
+        logger.info(f"[Agent][{trace_id}] ──────────────────────────────────────")
+        logger.info(f"[Agent][{trace_id}] ▶ 收到问题: {query[:200]}")
+        logger.info(f"[Agent][{trace_id}] ▶ 历史消息: {len(messages) - 1} 条")
+
         for chunk in self.agent.stream(input_dict, stream_mode="values"):
             latest_message = chunk["messages"][-1]
 
-            # 只输出不含 tool_calls 的 AIMessage（最终回复）
-            if isinstance(latest_message, AIMessage) and not latest_message.tool_calls:
+            # ── AIMessage + tool_calls = LLM 在推理并决定调用工具 ──
+            if isinstance(latest_message, AIMessage) and latest_message.tool_calls:
+                for tc in latest_message.tool_calls:
+                    logger.info(
+                        f"[Agent][{trace_id}]  思考: {tc['name']}("
+                        + ", ".join(f"{k}={v}" for k, v in tc.get("args", {}).items())
+                        + ")"
+                    )
+
+            # ── ToolMessage = 工具调用返回结果 ──
+            elif isinstance(latest_message, ToolMessage):
+                content = latest_message.content or ""
+                summary = content[:500].replace("\n", " ")
+                logger.info(
+                    f"[Agent][{trace_id}]  观察: {latest_message.name or ''} "
+                    f"→ {summary}{'…' if len(content) > 500 else ''}"
+                )
+
+            # ── AIMessage + 无 tool_calls = 最终回复 ──
+            elif isinstance(latest_message, AIMessage) and not latest_message.tool_calls:
                 if latest_message.content:
+                    logger.info(
+                        f"[Agent][{trace_id}] ✓ 最终回答: {latest_message.content[:500]}"
+                    )
                     yield latest_message.content
+
+        logger.info(f"[Agent][{trace_id}] ──────────────────────────────────────")
